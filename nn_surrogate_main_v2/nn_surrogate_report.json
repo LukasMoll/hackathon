@@ -1,0 +1,273 @@
+{
+  "policy_path": "training_outputs_main/final_policy.pt",
+  "collect": {
+    "episodes": 287,
+    "env_steps": 13557,
+    "samples": 50000,
+    "feature_count": 21
+  },
+  "data": {
+    "samples_total": 50000,
+    "samples_train": 45000,
+    "samples_test": 5000,
+    "feature_dim": 21
+  },
+  "search": {
+    "candidates": [
+      "16x8",
+      "24x12",
+      "32x16",
+      "40x20"
+    ],
+    "tick_budget": 5000.0,
+    "results": [
+      {
+        "hidden1": 16,
+        "hidden2": 8,
+        "train_acc": 0.7611333333333333,
+        "test_acc": 0.7544,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 1682.8425,
+        "max_tick_cost": 1714.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 24,
+        "hidden2": 12,
+        "train_acc": 0.7765555555555556,
+        "test_acc": 0.7676,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 2389.54875,
+        "max_tick_cost": 2413.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 32,
+        "hidden2": 16,
+        "train_acc": 0.7837555555555555,
+        "test_acc": 0.7732,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 3183.70375,
+        "max_tick_cost": 3207.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 40,
+        "hidden2": 20,
+        "train_acc": 0.7857777777777778,
+        "test_acc": 0.7766,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 4129.665,
+        "max_tick_cost": 4161.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      }
+    ]
+  },
+  "selected": {
+    "hidden1": 40,
+    "hidden2": 20,
+    "train_acc": 0.7857777777777778,
+    "test_acc": 0.7766,
+    "parity_rate": 1.0,
+    "avg_tick_cost": 4129.665,
+    "max_tick_cost": 4161.0,
+    "fits_tick_budget": true,
+    "parse_ok": true
+  },
+  "feature_schema": {
+    "tile_coords": [
+      [
+        0,
+        -2
+      ],
+      [
+        1,
+        -2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        2,
+        -1
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        -2,
+        1
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        0,
+        2
+      ]
+    ],
+    "include_turn": true,
+    "include_length": true,
+    "include_prev_action": true,
+    "include_player_info": false,
+    "length_cap": 20,
+    "names": [
+      "tile_0_-2",
+      "tile_1_-2",
+      "tile_2_-2",
+      "tile_-1_-1",
+      "tile_0_-1",
+      "tile_1_-1",
+      "tile_2_-1",
+      "tile_-2_0",
+      "tile_-1_0",
+      "tile_1_0",
+      "tile_2_0",
+      "tile_-2_1",
+      "tile_-1_1",
+      "tile_0_1",
+      "tile_1_1",
+      "tile_-2_2",
+      "tile_-1_2",
+      "tile_0_2",
+      "turn",
+      "length",
+      "prev_action"
+    ]
+  },
+  "validation": {
+    "runs": [
+      {
+        "seed": 1,
+        "winner_id": null,
+        "steps_played": 6,
+        "total_ticks": 60000,
+        "errors": {
+          "0": "Hit occupied tile",
+          "1": "Hit occupied tile",
+          "2": "Hit occupied tile",
+          "3": "Hit occupied tile",
+          "4": "Hit occupied tile",
+          "5": "Hit occupied tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      },
+      {
+        "seed": 2,
+        "winner_id": null,
+        "steps_played": 6,
+        "total_ticks": 60000,
+        "errors": {
+          "0": "Hit occupied tile",
+          "1": "Hit occupied tile",
+          "2": "Hit occupied tile",
+          "3": "Hit occupied tile",
+          "4": "Hit occupied tile",
+          "5": "Hit occupied tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      },
+      {
+        "seed": 3,
+        "winner_id": null,
+        "steps_played": 6,
+        "total_ticks": 60000,
+        "errors": {
+          "0": "Hit occupied tile",
+          "1": "Hit occupied tile",
+          "2": "Hit occupied tile",
+          "3": "Hit occupied tile",
+          "4": "Hit occupied tile",
+          "5": "Hit occupied tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      }
+    ],
+    "fatal_error_count": 0
+  },
+  "benchmark": {
+    "matches": 40,
+    "model": {
+      "agents": 120.0,
+      "avg_rank": 3.533333333333333,
+      "win_rate_per_agent": 0.13333333333333333,
+      "top2_rate_per_agent": 0.35833333333333334,
+      "avg_survival_steps": 33.733333333333334
+    },
+    "tronkscript": {
+      "agents": 120.0,
+      "avg_rank": 3.466666666666667,
+      "win_rate_per_agent": 0.16666666666666666,
+      "top2_rate_per_agent": 0.275,
+      "avg_survival_steps": 32.075
+    },
+    "delta_tronkscript_minus_model": {
+      "avg_rank": -0.06666666666666643,
+      "win_rate_per_agent": 0.033333333333333326,
+      "top2_rate_per_agent": -0.08333333333333331,
+      "avg_survival_steps": -1.6583333333333314
+    },
+    "tronkscript_runtime": {
+      "avg_tick_cost_per_infer_call": 4131.607690309172,
+      "infer_calls": 3849,
+      "python_tree_parity_rate": 1.0,
+      "python_tree_parity_samples": 3849
+    }
+  },
+  "artifacts": {
+    "float_model": "nn_surrogate_main_v2/nn_student_float.pt",
+    "quantized_model": "nn_surrogate_main_v2/nn_student_quantized.json",
+    "lib_tronkscript": "nn_surrogate_main_v2/nn_policy_lib.tronkscript",
+    "bot_tronkscript": "nn_surrogate_main_v2/nn_policy_bot.tronkscript"
+  }
+}

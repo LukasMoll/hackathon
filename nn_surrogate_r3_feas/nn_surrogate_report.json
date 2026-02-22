@@ -1,0 +1,347 @@
+{
+  "policy_path": "training_outputs_main/final_policy.pt",
+  "collect": {
+    "episodes": 116,
+    "env_steps": 5459,
+    "samples": 20000,
+    "feature_count": 39
+  },
+  "data": {
+    "samples_total": 20000,
+    "samples_train": 18000,
+    "samples_test": 2000,
+    "feature_dim": 39
+  },
+  "search": {
+    "candidates": [
+      "8x4",
+      "12x6",
+      "16x8",
+      "24x12",
+      "32x16"
+    ],
+    "tick_budget": 10000.0,
+    "results": [
+      {
+        "hidden1": 8,
+        "hidden2": 4,
+        "train_acc": 0.6513888888888889,
+        "test_acc": 0.6665,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 1860.458,
+        "max_tick_cost": 1902.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 12,
+        "hidden2": 6,
+        "train_acc": 0.6388888888888888,
+        "test_acc": 0.6545,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 2255.986,
+        "max_tick_cost": 2291.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 16,
+        "hidden2": 8,
+        "train_acc": 0.7245555555555555,
+        "test_acc": 0.727,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 2705.794,
+        "max_tick_cost": 2741.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 24,
+        "hidden2": 12,
+        "train_acc": 0.7402222222222222,
+        "test_acc": 0.747,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 3664.792,
+        "max_tick_cost": 3699.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 32,
+        "hidden2": 16,
+        "train_acc": 0.7231111111111111,
+        "test_acc": 0.716,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 4744.55,
+        "max_tick_cost": 4785.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      }
+    ]
+  },
+  "selected": {
+    "hidden1": 24,
+    "hidden2": 12,
+    "train_acc": 0.7402222222222222,
+    "test_acc": 0.747,
+    "parity_rate": 1.0,
+    "avg_tick_cost": 3664.792,
+    "max_tick_cost": 3699.0,
+    "fits_tick_budget": true,
+    "parse_ok": true
+  },
+  "feature_schema": {
+    "tile_coords": [
+      [
+        0,
+        -3
+      ],
+      [
+        1,
+        -3
+      ],
+      [
+        2,
+        -3
+      ],
+      [
+        3,
+        -3
+      ],
+      [
+        -1,
+        -2
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        1,
+        -2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        3,
+        -2
+      ],
+      [
+        -2,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        2,
+        -1
+      ],
+      [
+        3,
+        -1
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        -3,
+        1
+      ],
+      [
+        -2,
+        1
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        -3,
+        2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -2,
+        3
+      ],
+      [
+        -1,
+        3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "include_turn": true,
+    "include_length": true,
+    "include_prev_action": true,
+    "include_player_info": false,
+    "length_cap": 20,
+    "names": [
+      "tile_0_-3",
+      "tile_1_-3",
+      "tile_2_-3",
+      "tile_3_-3",
+      "tile_-1_-2",
+      "tile_0_-2",
+      "tile_1_-2",
+      "tile_2_-2",
+      "tile_3_-2",
+      "tile_-2_-1",
+      "tile_-1_-1",
+      "tile_0_-1",
+      "tile_1_-1",
+      "tile_2_-1",
+      "tile_3_-1",
+      "tile_-3_0",
+      "tile_-2_0",
+      "tile_-1_0",
+      "tile_1_0",
+      "tile_2_0",
+      "tile_3_0",
+      "tile_-3_1",
+      "tile_-2_1",
+      "tile_-1_1",
+      "tile_0_1",
+      "tile_1_1",
+      "tile_2_1",
+      "tile_-3_2",
+      "tile_-2_2",
+      "tile_-1_2",
+      "tile_0_2",
+      "tile_1_2",
+      "tile_-3_3",
+      "tile_-2_3",
+      "tile_-1_3",
+      "tile_0_3",
+      "turn",
+      "length",
+      "prev_action"
+    ]
+  },
+  "validation": {
+    "runs": [
+      {
+        "seed": 1,
+        "winner_id": null,
+        "steps_played": 7,
+        "total_ticks": 70000,
+        "errors": {
+          "0": "Hit occupied tile",
+          "1": "Hit occupied tile",
+          "2": "Hit occupied tile",
+          "3": "Hit occupied tile",
+          "4": "Hit occupied tile",
+          "5": "Hit occupied tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      },
+      {
+        "seed": 2,
+        "winner_id": null,
+        "steps_played": 7,
+        "total_ticks": 70000,
+        "errors": {
+          "0": "Hit occupied tile",
+          "1": "Hit occupied tile",
+          "2": "Hit occupied tile",
+          "3": "Hit occupied tile",
+          "4": "Hit occupied tile",
+          "5": "Hit occupied tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      },
+      {
+        "seed": 3,
+        "winner_id": null,
+        "steps_played": 7,
+        "total_ticks": 70000,
+        "errors": {
+          "0": "Hit occupied tile",
+          "1": "Hit occupied tile",
+          "2": "Hit occupied tile",
+          "3": "Hit occupied tile",
+          "4": "Hit occupied tile",
+          "5": "Hit occupied tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      }
+    ],
+    "fatal_error_count": 0
+  },
+  "benchmark": null,
+  "artifacts": {
+    "float_model": "nn_surrogate_r3_feas/nn_student_float.pt",
+    "quantized_model": "nn_surrogate_r3_feas/nn_student_quantized.json",
+    "lib_tronkscript": "nn_surrogate_r3_feas/nn_policy_lib.tronkscript",
+    "bot_tronkscript": "nn_surrogate_r3_feas/nn_policy_bot.tronkscript"
+  }
+}

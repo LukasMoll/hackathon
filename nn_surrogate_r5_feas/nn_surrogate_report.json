@@ -1,0 +1,601 @@
+{
+  "policy_path": "training_outputs_main/final_policy.pt",
+  "collect": {
+    "episodes": 116,
+    "env_steps": 5459,
+    "samples": 20000,
+    "feature_count": 93
+  },
+  "data": {
+    "samples_total": 20000,
+    "samples_train": 18000,
+    "samples_test": 2000,
+    "feature_dim": 93
+  },
+  "search": {
+    "candidates": [
+      "8x4",
+      "12x6",
+      "16x8",
+      "24x12"
+    ],
+    "tick_budget": 10000.0,
+    "results": [
+      {
+        "hidden1": 8,
+        "hidden2": 4,
+        "train_acc": 0.6728888888888889,
+        "test_acc": 0.665,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 4081.552,
+        "max_tick_cost": 4161.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 12,
+        "hidden2": 6,
+        "train_acc": 0.7143333333333334,
+        "test_acc": 0.706,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 4915.772,
+        "max_tick_cost": 4974.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 16,
+        "hidden2": 8,
+        "train_acc": 0.6533333333333333,
+        "test_acc": 0.6545,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 5744.652,
+        "max_tick_cost": 5816.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 24,
+        "hidden2": 12,
+        "train_acc": 0.7446111111111111,
+        "test_acc": 0.7465,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 7466.2,
+        "max_tick_cost": 7541.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      }
+    ]
+  },
+  "selected": {
+    "hidden1": 24,
+    "hidden2": 12,
+    "train_acc": 0.7446111111111111,
+    "test_acc": 0.7465,
+    "parity_rate": 1.0,
+    "avg_tick_cost": 7466.2,
+    "max_tick_cost": 7541.0,
+    "fits_tick_budget": true,
+    "parse_ok": true
+  },
+  "feature_schema": {
+    "tile_coords": [
+      [
+        0,
+        -5
+      ],
+      [
+        1,
+        -5
+      ],
+      [
+        2,
+        -5
+      ],
+      [
+        3,
+        -5
+      ],
+      [
+        4,
+        -5
+      ],
+      [
+        5,
+        -5
+      ],
+      [
+        -1,
+        -4
+      ],
+      [
+        0,
+        -4
+      ],
+      [
+        1,
+        -4
+      ],
+      [
+        2,
+        -4
+      ],
+      [
+        3,
+        -4
+      ],
+      [
+        4,
+        -4
+      ],
+      [
+        5,
+        -4
+      ],
+      [
+        -2,
+        -3
+      ],
+      [
+        -1,
+        -3
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        1,
+        -3
+      ],
+      [
+        2,
+        -3
+      ],
+      [
+        3,
+        -3
+      ],
+      [
+        4,
+        -3
+      ],
+      [
+        5,
+        -3
+      ],
+      [
+        -3,
+        -2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -1,
+        -2
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        1,
+        -2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        3,
+        -2
+      ],
+      [
+        4,
+        -2
+      ],
+      [
+        5,
+        -2
+      ],
+      [
+        -4,
+        -1
+      ],
+      [
+        -3,
+        -1
+      ],
+      [
+        -2,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        2,
+        -1
+      ],
+      [
+        3,
+        -1
+      ],
+      [
+        4,
+        -1
+      ],
+      [
+        5,
+        -1
+      ],
+      [
+        -5,
+        0
+      ],
+      [
+        -4,
+        0
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        5,
+        0
+      ],
+      [
+        -5,
+        1
+      ],
+      [
+        -4,
+        1
+      ],
+      [
+        -3,
+        1
+      ],
+      [
+        -2,
+        1
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        4,
+        1
+      ],
+      [
+        -5,
+        2
+      ],
+      [
+        -4,
+        2
+      ],
+      [
+        -3,
+        2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        3,
+        2
+      ],
+      [
+        -5,
+        3
+      ],
+      [
+        -4,
+        3
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -2,
+        3
+      ],
+      [
+        -1,
+        3
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        -5,
+        4
+      ],
+      [
+        -4,
+        4
+      ],
+      [
+        -3,
+        4
+      ],
+      [
+        -2,
+        4
+      ],
+      [
+        -1,
+        4
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        -5,
+        5
+      ],
+      [
+        -4,
+        5
+      ],
+      [
+        -3,
+        5
+      ],
+      [
+        -2,
+        5
+      ],
+      [
+        -1,
+        5
+      ],
+      [
+        0,
+        5
+      ]
+    ],
+    "include_turn": true,
+    "include_length": true,
+    "include_prev_action": true,
+    "include_player_info": false,
+    "length_cap": 20,
+    "names": [
+      "tile_0_-5",
+      "tile_1_-5",
+      "tile_2_-5",
+      "tile_3_-5",
+      "tile_4_-5",
+      "tile_5_-5",
+      "tile_-1_-4",
+      "tile_0_-4",
+      "tile_1_-4",
+      "tile_2_-4",
+      "tile_3_-4",
+      "tile_4_-4",
+      "tile_5_-4",
+      "tile_-2_-3",
+      "tile_-1_-3",
+      "tile_0_-3",
+      "tile_1_-3",
+      "tile_2_-3",
+      "tile_3_-3",
+      "tile_4_-3",
+      "tile_5_-3",
+      "tile_-3_-2",
+      "tile_-2_-2",
+      "tile_-1_-2",
+      "tile_0_-2",
+      "tile_1_-2",
+      "tile_2_-2",
+      "tile_3_-2",
+      "tile_4_-2",
+      "tile_5_-2",
+      "tile_-4_-1",
+      "tile_-3_-1",
+      "tile_-2_-1",
+      "tile_-1_-1",
+      "tile_0_-1",
+      "tile_1_-1",
+      "tile_2_-1",
+      "tile_3_-1",
+      "tile_4_-1",
+      "tile_5_-1",
+      "tile_-5_0",
+      "tile_-4_0",
+      "tile_-3_0",
+      "tile_-2_0",
+      "tile_-1_0",
+      "tile_1_0",
+      "tile_2_0",
+      "tile_3_0",
+      "tile_4_0",
+      "tile_5_0",
+      "tile_-5_1",
+      "tile_-4_1",
+      "tile_-3_1",
+      "tile_-2_1",
+      "tile_-1_1",
+      "tile_0_1",
+      "tile_1_1",
+      "tile_2_1",
+      "tile_3_1",
+      "tile_4_1",
+      "tile_-5_2",
+      "tile_-4_2",
+      "tile_-3_2",
+      "tile_-2_2",
+      "tile_-1_2",
+      "tile_0_2",
+      "tile_1_2",
+      "tile_2_2",
+      "tile_3_2",
+      "tile_-5_3",
+      "tile_-4_3",
+      "tile_-3_3",
+      "tile_-2_3",
+      "tile_-1_3",
+      "tile_0_3",
+      "tile_1_3",
+      "tile_2_3",
+      "tile_-5_4",
+      "tile_-4_4",
+      "tile_-3_4",
+      "tile_-2_4",
+      "tile_-1_4",
+      "tile_0_4",
+      "tile_1_4",
+      "tile_-5_5",
+      "tile_-4_5",
+      "tile_-3_5",
+      "tile_-2_5",
+      "tile_-1_5",
+      "tile_0_5",
+      "turn",
+      "length",
+      "prev_action"
+    ]
+  },
+  "validation": {
+    "runs": [
+      {
+        "seed": 1,
+        "winner_id": 3,
+        "steps_played": 17,
+        "total_ticks": 170000,
+        "errors": {
+          "1": "Contested tile",
+          "5": "Contested tile",
+          "0": "Hit wall",
+          "2": "Contested tile",
+          "4": "Contested tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      },
+      {
+        "seed": 2,
+        "winner_id": null,
+        "steps_played": 30,
+        "total_ticks": 300000,
+        "errors": {
+          "1": "Contested tile",
+          "4": "Contested tile",
+          "3": "Contested tile",
+          "5": "Contested tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      },
+      {
+        "seed": 3,
+        "winner_id": 1,
+        "steps_played": 30,
+        "total_ticks": 300000,
+        "errors": {
+          "3": "Contested tile",
+          "5": "Contested tile",
+          "0": "Hit occupied tile",
+          "4": "Hit occupied tile",
+          "2": "Hit occupied tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      }
+    ],
+    "fatal_error_count": 0
+  },
+  "benchmark": null,
+  "artifacts": {
+    "float_model": "nn_surrogate_r5_feas/nn_student_float.pt",
+    "quantized_model": "nn_surrogate_r5_feas/nn_student_quantized.json",
+    "lib_tronkscript": "nn_surrogate_r5_feas/nn_policy_lib.tronkscript",
+    "bot_tronkscript": "nn_surrogate_r5_feas/nn_policy_bot.tronkscript"
+  }
+}

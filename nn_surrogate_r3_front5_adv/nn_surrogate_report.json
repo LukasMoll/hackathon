@@ -1,0 +1,565 @@
+{
+  "policy_path": "training_outputs_main/final_policy.pt",
+  "collect": {
+    "episodes": 287,
+    "env_steps": 13557,
+    "samples": 50000,
+    "feature_count": 59
+  },
+  "distillation": {
+    "ce_coef": 1.0,
+    "kl_coef": 0.5,
+    "temperature": 2.0
+  },
+  "dagger": {
+    "iters": 1,
+    "samples_per_iter": 30000,
+    "teacher_mix_prob": 0.15,
+    "use_safety_fallback": true,
+    "rounds": [
+      {
+        "round": 1,
+        "collect": {
+          "episodes": 198,
+          "env_steps": 8514,
+          "samples": 30000,
+          "feature_count": 59,
+          "teacher_mix_prob": 0.15,
+          "teacher_action_count": 4463,
+          "student_action_count": 25538
+        },
+        "selected_after_round": {
+          "hidden1": 40,
+          "hidden2": 20,
+          "train_acc": 0.8415833333333333,
+          "test_acc": 0.832875,
+          "parity_rate": 1.0,
+          "avg_tick_cost": 8048.276666666667,
+          "max_tick_cost": 8102.0,
+          "fits_tick_budget": true,
+          "parse_ok": true
+        },
+        "samples_total": 80000
+      }
+    ]
+  },
+  "ppo_finetune": {
+    "updates": 8,
+    "history": [
+      {
+        "update": 1.0,
+        "loss": 0.20581902240713437,
+        "policy_loss": 0.010502136188248794,
+        "value_loss": 0.3988146563371023,
+        "entropy": 0.4090440273284912,
+        "avg_rank": 3.5,
+        "avg_survival_steps": 14.868055555555555
+      },
+      {
+        "update": 2.0,
+        "loss": 0.12888305224478244,
+        "policy_loss": -0.005335593968629837,
+        "value_loss": 0.27646159728368125,
+        "entropy": 0.4012153744697571,
+        "avg_rank": 3.5,
+        "avg_survival_steps": 15.118055555555555
+      },
+      {
+        "update": 3.0,
+        "loss": 0.09129803751905759,
+        "policy_loss": 0.0007143815358479818,
+        "value_loss": 0.18922819569706917,
+        "entropy": 0.4030444373687108,
+        "avg_rank": 3.5,
+        "avg_survival_steps": 13.520833333333334
+      },
+      {
+        "update": 4.0,
+        "loss": 0.025545258447527884,
+        "policy_loss": -0.03511674162000418,
+        "value_loss": 0.1299197201927503,
+        "entropy": 0.4297860364119212,
+        "avg_rank": 3.5,
+        "avg_survival_steps": 14.42361111111111
+      },
+      {
+        "update": 5.0,
+        "loss": 0.05894899205304682,
+        "policy_loss": 0.000254995800787583,
+        "value_loss": 0.12632633559405804,
+        "entropy": 0.44691737989584607,
+        "avg_rank": 3.5,
+        "avg_survival_steps": 13.756944444444445
+      },
+      {
+        "update": 6.0,
+        "loss": 0.04945489717647433,
+        "policy_loss": -0.0011844666829953592,
+        "value_loss": 0.11039346704880397,
+        "entropy": 0.45573685814936954,
+        "avg_rank": 3.5,
+        "avg_survival_steps": 14.104166666666666
+      },
+      {
+        "update": 7.0,
+        "loss": 0.04725923032189409,
+        "policy_loss": -0.0008441169823830327,
+        "value_loss": 0.10559215644995372,
+        "entropy": 0.4692731300989787,
+        "avg_rank": 3.5,
+        "avg_survival_steps": 13.70138888888889
+      },
+      {
+        "update": 8.0,
+        "loss": 0.038039249406817056,
+        "policy_loss": -0.005236186009521286,
+        "value_loss": 0.09619414123396079,
+        "entropy": 0.48216352115074795,
+        "avg_rank": 3.5,
+        "avg_survival_steps": 13.07638888888889
+      }
+    ]
+  },
+  "data": {
+    "samples_total": 80000,
+    "samples_train": 72000,
+    "samples_test": 8000,
+    "feature_dim": 59
+  },
+  "search": {
+    "candidates": [
+      "24x12",
+      "32x16",
+      "40x20"
+    ],
+    "tick_budget": 10000.0,
+    "results": [
+      {
+        "hidden1": 24,
+        "hidden2": 12,
+        "train_acc": 0.8138666666666666,
+        "test_acc": 0.8098,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 5087.394166666667,
+        "max_tick_cost": 5137.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 32,
+        "hidden2": 16,
+        "train_acc": 0.8257111111111111,
+        "test_acc": 0.8216,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 6441.669166666667,
+        "max_tick_cost": 6499.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 40,
+        "hidden2": 20,
+        "train_acc": 0.8272444444444444,
+        "test_acc": 0.8228,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 8051.501666666667,
+        "max_tick_cost": 8099.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      }
+    ]
+  },
+  "selected": {
+    "hidden1": 40,
+    "hidden2": 20,
+    "train_acc": 0.8415833333333333,
+    "test_acc": 0.832875,
+    "parity_rate": 1.0,
+    "avg_tick_cost": 8051.015833333333,
+    "max_tick_cost": 8113.0,
+    "fits_tick_budget": true,
+    "parse_ok": true
+  },
+  "feature_schema": {
+    "tile_coords": [
+      [
+        0,
+        -5
+      ],
+      [
+        1,
+        -5
+      ],
+      [
+        2,
+        -5
+      ],
+      [
+        3,
+        -5
+      ],
+      [
+        4,
+        -5
+      ],
+      [
+        5,
+        -5
+      ],
+      [
+        -1,
+        -4
+      ],
+      [
+        0,
+        -4
+      ],
+      [
+        1,
+        -4
+      ],
+      [
+        2,
+        -4
+      ],
+      [
+        3,
+        -4
+      ],
+      [
+        4,
+        -4
+      ],
+      [
+        -2,
+        -3
+      ],
+      [
+        -1,
+        -3
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        1,
+        -3
+      ],
+      [
+        2,
+        -3
+      ],
+      [
+        3,
+        -3
+      ],
+      [
+        -3,
+        -2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -1,
+        -2
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        1,
+        -2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        3,
+        -2
+      ],
+      [
+        -4,
+        -1
+      ],
+      [
+        -3,
+        -1
+      ],
+      [
+        -2,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        2,
+        -1
+      ],
+      [
+        3,
+        -1
+      ],
+      [
+        -5,
+        0
+      ],
+      [
+        -4,
+        0
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        -3,
+        1
+      ],
+      [
+        -2,
+        1
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        -3,
+        2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -2,
+        3
+      ],
+      [
+        -1,
+        3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "include_turn": true,
+    "include_length": true,
+    "include_prev_action": true,
+    "include_player_info": false,
+    "length_cap": 20,
+    "names": [
+      "tile_0_-5",
+      "tile_1_-5",
+      "tile_2_-5",
+      "tile_3_-5",
+      "tile_4_-5",
+      "tile_5_-5",
+      "tile_-1_-4",
+      "tile_0_-4",
+      "tile_1_-4",
+      "tile_2_-4",
+      "tile_3_-4",
+      "tile_4_-4",
+      "tile_-2_-3",
+      "tile_-1_-3",
+      "tile_0_-3",
+      "tile_1_-3",
+      "tile_2_-3",
+      "tile_3_-3",
+      "tile_-3_-2",
+      "tile_-2_-2",
+      "tile_-1_-2",
+      "tile_0_-2",
+      "tile_1_-2",
+      "tile_2_-2",
+      "tile_3_-2",
+      "tile_-4_-1",
+      "tile_-3_-1",
+      "tile_-2_-1",
+      "tile_-1_-1",
+      "tile_0_-1",
+      "tile_1_-1",
+      "tile_2_-1",
+      "tile_3_-1",
+      "tile_-5_0",
+      "tile_-4_0",
+      "tile_-3_0",
+      "tile_-2_0",
+      "tile_-1_0",
+      "tile_1_0",
+      "tile_2_0",
+      "tile_3_0",
+      "tile_-3_1",
+      "tile_-2_1",
+      "tile_-1_1",
+      "tile_0_1",
+      "tile_1_1",
+      "tile_2_1",
+      "tile_-3_2",
+      "tile_-2_2",
+      "tile_-1_2",
+      "tile_0_2",
+      "tile_1_2",
+      "tile_-3_3",
+      "tile_-2_3",
+      "tile_-1_3",
+      "tile_0_3",
+      "turn",
+      "length",
+      "prev_action"
+    ]
+  },
+  "validation": {
+    "runs": [
+      {
+        "seed": 1,
+        "winner_id": null,
+        "steps_played": 6,
+        "total_ticks": 60000,
+        "errors": {
+          "0": "Contested tile",
+          "1": "Contested tile",
+          "2": "Contested tile",
+          "3": "Contested tile",
+          "4": "Contested tile",
+          "5": "Contested tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      },
+      {
+        "seed": 2,
+        "winner_id": null,
+        "steps_played": 6,
+        "total_ticks": 60000,
+        "errors": {
+          "0": "Contested tile",
+          "1": "Contested tile",
+          "2": "Contested tile",
+          "3": "Contested tile",
+          "4": "Contested tile",
+          "5": "Contested tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      },
+      {
+        "seed": 3,
+        "winner_id": null,
+        "steps_played": 6,
+        "total_ticks": 60000,
+        "errors": {
+          "0": "Contested tile",
+          "1": "Contested tile",
+          "2": "Contested tile",
+          "3": "Contested tile",
+          "4": "Contested tile",
+          "5": "Contested tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      }
+    ],
+    "fatal_error_count": 0
+  },
+  "benchmark": {
+    "matches": 40,
+    "model": {
+      "agents": 120.0,
+      "avg_rank": 3.191666666666667,
+      "win_rate_per_agent": 0.20833333333333334,
+      "top2_rate_per_agent": 0.44166666666666665,
+      "avg_survival_steps": 30.65
+    },
+    "tronkscript": {
+      "agents": 120.0,
+      "avg_rank": 3.808333333333333,
+      "win_rate_per_agent": 0.1,
+      "top2_rate_per_agent": 0.19166666666666668,
+      "avg_survival_steps": 20.583333333333332
+    },
+    "delta_tronkscript_minus_model": {
+      "avg_rank": 0.6166666666666663,
+      "win_rate_per_agent": -0.10833333333333334,
+      "top2_rate_per_agent": -0.24999999999999997,
+      "avg_survival_steps": -10.066666666666666
+    },
+    "tronkscript_runtime": {
+      "avg_tick_cost_per_infer_call": 8052.486234817814,
+      "infer_calls": 2470,
+      "python_tree_parity_rate": 1.0,
+      "python_tree_parity_samples": 2470
+    }
+  },
+  "artifacts": {
+    "float_model": "nn_surrogate_r3_front5_adv/nn_student_float.pt",
+    "quantized_model": "nn_surrogate_r3_front5_adv/nn_student_quantized.json",
+    "lib_tronkscript": "nn_surrogate_r3_front5_adv/nn_policy_lib.tronkscript",
+    "bot_tronkscript": "nn_surrogate_r3_front5_adv/nn_policy_bot.tronkscript"
+  }
+}

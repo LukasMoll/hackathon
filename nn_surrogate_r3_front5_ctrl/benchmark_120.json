@@ -1,0 +1,29 @@
+{
+  "matches": 120,
+  "model": {
+    "agents": 360.0,
+    "avg_rank": 3.2416666666666667,
+    "win_rate_per_agent": 0.17777777777777778,
+    "top2_rate_per_agent": 0.35833333333333334,
+    "avg_survival_steps": 32.84444444444444
+  },
+  "tronkscript": {
+    "agents": 360.0,
+    "avg_rank": 3.7583333333333333,
+    "win_rate_per_agent": 0.13055555555555556,
+    "top2_rate_per_agent": 0.2861111111111111,
+    "avg_survival_steps": 26.538888888888888
+  },
+  "delta_tronkscript_minus_model": {
+    "avg_rank": 0.5166666666666666,
+    "win_rate_per_agent": -0.04722222222222222,
+    "top2_rate_per_agent": -0.07222222222222224,
+    "avg_survival_steps": -6.305555555555554
+  },
+  "tronkscript_runtime": {
+    "avg_tick_cost_per_infer_call": 6485.632091270672,
+    "infer_calls": 9554,
+    "python_tree_parity_rate": 1.0,
+    "python_tree_parity_samples": 9554
+  }
+}

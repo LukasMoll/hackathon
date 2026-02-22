@@ -1,0 +1,451 @@
+{
+  "policy_path": "training_outputs_main/final_policy.pt",
+  "collect": {
+    "episodes": 287,
+    "env_steps": 13557,
+    "samples": 50000,
+    "feature_count": 59
+  },
+  "data": {
+    "samples_total": 50000,
+    "samples_train": 45000,
+    "samples_test": 5000,
+    "feature_dim": 59
+  },
+  "search": {
+    "candidates": [
+      "24x12",
+      "32x16",
+      "40x20"
+    ],
+    "tick_budget": 10000.0,
+    "results": [
+      {
+        "hidden1": 24,
+        "hidden2": 12,
+        "train_acc": 0.8131777777777778,
+        "test_acc": 0.8142,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 5108.6575,
+        "max_tick_cost": 5160.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 32,
+        "hidden2": 16,
+        "train_acc": 0.8216666666666667,
+        "test_acc": 0.8198,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 6484.0125,
+        "max_tick_cost": 6538.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      },
+      {
+        "hidden1": 40,
+        "hidden2": 20,
+        "train_acc": 0.8251777777777778,
+        "test_acc": 0.8172,
+        "parity_rate": 1.0,
+        "avg_tick_cost": 8051.8475,
+        "max_tick_cost": 8097.0,
+        "fits_tick_budget": true,
+        "parse_ok": true
+      }
+    ]
+  },
+  "selected": {
+    "hidden1": 32,
+    "hidden2": 16,
+    "train_acc": 0.8216666666666667,
+    "test_acc": 0.8198,
+    "parity_rate": 1.0,
+    "avg_tick_cost": 6484.0125,
+    "max_tick_cost": 6538.0,
+    "fits_tick_budget": true,
+    "parse_ok": true
+  },
+  "feature_schema": {
+    "tile_coords": [
+      [
+        0,
+        -5
+      ],
+      [
+        1,
+        -5
+      ],
+      [
+        2,
+        -5
+      ],
+      [
+        3,
+        -5
+      ],
+      [
+        4,
+        -5
+      ],
+      [
+        5,
+        -5
+      ],
+      [
+        -1,
+        -4
+      ],
+      [
+        0,
+        -4
+      ],
+      [
+        1,
+        -4
+      ],
+      [
+        2,
+        -4
+      ],
+      [
+        3,
+        -4
+      ],
+      [
+        4,
+        -4
+      ],
+      [
+        -2,
+        -3
+      ],
+      [
+        -1,
+        -3
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        1,
+        -3
+      ],
+      [
+        2,
+        -3
+      ],
+      [
+        3,
+        -3
+      ],
+      [
+        -3,
+        -2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -1,
+        -2
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        1,
+        -2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        3,
+        -2
+      ],
+      [
+        -4,
+        -1
+      ],
+      [
+        -3,
+        -1
+      ],
+      [
+        -2,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        2,
+        -1
+      ],
+      [
+        3,
+        -1
+      ],
+      [
+        -5,
+        0
+      ],
+      [
+        -4,
+        0
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        -3,
+        1
+      ],
+      [
+        -2,
+        1
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        -3,
+        2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        -1,
+        2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        -2,
+        3
+      ],
+      [
+        -1,
+        3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "include_turn": true,
+    "include_length": true,
+    "include_prev_action": true,
+    "include_player_info": false,
+    "length_cap": 20,
+    "names": [
+      "tile_0_-5",
+      "tile_1_-5",
+      "tile_2_-5",
+      "tile_3_-5",
+      "tile_4_-5",
+      "tile_5_-5",
+      "tile_-1_-4",
+      "tile_0_-4",
+      "tile_1_-4",
+      "tile_2_-4",
+      "tile_3_-4",
+      "tile_4_-4",
+      "tile_-2_-3",
+      "tile_-1_-3",
+      "tile_0_-3",
+      "tile_1_-3",
+      "tile_2_-3",
+      "tile_3_-3",
+      "tile_-3_-2",
+      "tile_-2_-2",
+      "tile_-1_-2",
+      "tile_0_-2",
+      "tile_1_-2",
+      "tile_2_-2",
+      "tile_3_-2",
+      "tile_-4_-1",
+      "tile_-3_-1",
+      "tile_-2_-1",
+      "tile_-1_-1",
+      "tile_0_-1",
+      "tile_1_-1",
+      "tile_2_-1",
+      "tile_3_-1",
+      "tile_-5_0",
+      "tile_-4_0",
+      "tile_-3_0",
+      "tile_-2_0",
+      "tile_-1_0",
+      "tile_1_0",
+      "tile_2_0",
+      "tile_3_0",
+      "tile_-3_1",
+      "tile_-2_1",
+      "tile_-1_1",
+      "tile_0_1",
+      "tile_1_1",
+      "tile_2_1",
+      "tile_-3_2",
+      "tile_-2_2",
+      "tile_-1_2",
+      "tile_0_2",
+      "tile_1_2",
+      "tile_-3_3",
+      "tile_-2_3",
+      "tile_-1_3",
+      "tile_0_3",
+      "turn",
+      "length",
+      "prev_action"
+    ]
+  },
+  "validation": {
+    "runs": [
+      {
+        "seed": 1,
+        "winner_id": null,
+        "steps_played": 6,
+        "total_ticks": 60000,
+        "errors": {
+          "0": "Contested tile",
+          "1": "Contested tile",
+          "2": "Contested tile",
+          "3": "Contested tile",
+          "4": "Contested tile",
+          "5": "Contested tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      },
+      {
+        "seed": 2,
+        "winner_id": null,
+        "steps_played": 6,
+        "total_ticks": 60000,
+        "errors": {
+          "0": "Contested tile",
+          "1": "Contested tile",
+          "2": "Contested tile",
+          "3": "Contested tile",
+          "4": "Contested tile",
+          "5": "Contested tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      },
+      {
+        "seed": 3,
+        "winner_id": null,
+        "steps_played": 6,
+        "total_ticks": 60000,
+        "errors": {
+          "0": "Contested tile",
+          "1": "Contested tile",
+          "2": "Contested tile",
+          "3": "Contested tile",
+          "4": "Contested tile",
+          "5": "Contested tile"
+        },
+        "fatal_errors": {},
+        "engine_used": "c"
+      }
+    ],
+    "fatal_error_count": 0
+  },
+  "benchmark": {
+    "matches": 40,
+    "model": {
+      "agents": 120.0,
+      "avg_rank": 3.2583333333333333,
+      "win_rate_per_agent": 0.15,
+      "top2_rate_per_agent": 0.36666666666666664,
+      "avg_survival_steps": 35.28333333333333
+    },
+    "tronkscript": {
+      "agents": 120.0,
+      "avg_rank": 3.7416666666666667,
+      "win_rate_per_agent": 0.16666666666666666,
+      "top2_rate_per_agent": 0.3,
+      "avg_survival_steps": 27.741666666666667
+    },
+    "delta_tronkscript_minus_model": {
+      "avg_rank": 0.4833333333333334,
+      "win_rate_per_agent": 0.016666666666666663,
+      "top2_rate_per_agent": -0.06666666666666665,
+      "avg_survival_steps": -7.541666666666664
+    },
+    "tronkscript_runtime": {
+      "avg_tick_cost_per_infer_call": 6485.491438870532,
+      "infer_calls": 3329,
+      "python_tree_parity_rate": 1.0,
+      "python_tree_parity_samples": 3329
+    }
+  },
+  "artifacts": {
+    "float_model": "nn_surrogate_r3_front5_ctrl/nn_student_float.pt",
+    "quantized_model": "nn_surrogate_r3_front5_ctrl/nn_student_quantized.json",
+    "lib_tronkscript": "nn_surrogate_r3_front5_ctrl/nn_policy_lib.tronkscript",
+    "bot_tronkscript": "nn_surrogate_r3_front5_ctrl/nn_policy_bot.tronkscript"
+  }
+}

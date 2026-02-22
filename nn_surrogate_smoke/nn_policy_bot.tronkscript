@@ -1,0 +1,1208 @@
+-- Auto-generated quantized compact neural policy.
+-- Integer-only fixed-point inference for Tronkscript.
+-- hidden=16x8, scale=64
+my_id = getPlayerId()
+mem_prev_action = 0
+
+function tile_code(q, r) do
+    exists, isEmpty, playerId, isGem = getTileRel(q, r)
+    if (exists == 0) then
+        value = -2
+    else if (isGem == 1) then
+        value = -1
+    else if (isEmpty == 1) then
+        value = 0
+    else if (playerId == my_id) then
+        value = 2
+    else
+        value = 1
+    end if
+    return value
+end function
+
+function wait_for_next_move() do
+    tick_now = getTick()
+    rem = tick_now % 10000
+    if (rem == 0) then
+        wait_ticks = 50
+    else
+        wait_ticks = 10000 - rem
+        wait_ticks = wait_ticks + 50
+    end if
+    wait(wait_ticks)
+end function
+
+function infer_action() do
+    f0 = tile_code(0, -2)
+    f1 = tile_code(1, -2)
+    f2 = tile_code(2, -2)
+    f3 = tile_code(-1, -1)
+    f4 = tile_code(0, -1)
+    f5 = tile_code(1, -1)
+    f6 = tile_code(2, -1)
+    f7 = tile_code(-2, 0)
+    f8 = tile_code(-1, 0)
+    f9 = tile_code(1, 0)
+    f10 = tile_code(2, 0)
+    f11 = tile_code(-2, 1)
+    f12 = tile_code(-1, 1)
+    f13 = tile_code(0, 1)
+    f14 = tile_code(1, 1)
+    f15 = tile_code(-2, 2)
+    f16 = tile_code(-1, 2)
+    f17 = tile_code(0, 2)
+    f18 = getTurn()
+    alive, headQ, headR, headFacing, myLength = getPlayerInfo(my_id)
+    f19 = myLength
+    if (f19 > 20) then
+        f19 = 20
+    end if
+    f20 = mem_prev_action
+    h1_0 = -11
+    tmp = f0 * 3
+    h1_0 = h1_0 - tmp
+    tmp = f1 * 3
+    h1_0 = h1_0 + tmp
+    tmp = f2 * 6
+    h1_0 = h1_0 - tmp
+    tmp = f3 * 8
+    h1_0 = h1_0 + tmp
+    tmp = f4 * 10
+    h1_0 = h1_0 - tmp
+    tmp = f5 * 11
+    h1_0 = h1_0 + tmp
+    tmp = f6 * 10
+    h1_0 = h1_0 - tmp
+    tmp = f7 * 9
+    h1_0 = h1_0 - tmp
+    tmp = f8 * 6
+    h1_0 = h1_0 - tmp
+    tmp = f9 * 7
+    h1_0 = h1_0 + tmp
+    tmp = f10 * 8
+    h1_0 = h1_0 - tmp
+    tmp = f11 * 8
+    h1_0 = h1_0 + tmp
+    tmp = f12 * 9
+    h1_0 = h1_0 - tmp
+    tmp = f13 * 11
+    h1_0 = h1_0 - tmp
+    tmp = f14 * 8
+    h1_0 = h1_0 - tmp
+    tmp = f16 * 8
+    h1_0 = h1_0 - tmp
+    tmp = f17 * 9
+    h1_0 = h1_0 + tmp
+    tmp = f18 * 3
+    h1_0 = h1_0 - tmp
+    tmp = f19 * 2
+    h1_0 = h1_0 + tmp
+    tmp = f20 * 7
+    h1_0 = h1_0 + tmp
+    h1_0 = h1_0 / 64
+    if (h1_0 < 0) then
+        h1_0 = 0
+    end if
+    h1_1 = -4
+    tmp = f0 * 2
+    h1_1 = h1_1 - tmp
+    tmp = f1 * 1
+    h1_1 = h1_1 - tmp
+    tmp = f2 * 10
+    h1_1 = h1_1 + tmp
+    tmp = f3 * 11
+    h1_1 = h1_1 - tmp
+    tmp = f5 * 11
+    h1_1 = h1_1 - tmp
+    tmp = f6 * 10
+    h1_1 = h1_1 + tmp
+    tmp = f7 * 7
+    h1_1 = h1_1 + tmp
+    tmp = f8 * 17
+    h1_1 = h1_1 - tmp
+    tmp = f9 * 8
+    h1_1 = h1_1 + tmp
+    tmp = f10 * 10
+    h1_1 = h1_1 + tmp
+    tmp = f11 * 2
+    h1_1 = h1_1 + tmp
+    tmp = f12 * 2
+    h1_1 = h1_1 + tmp
+    tmp = f13 * 16
+    h1_1 = h1_1 + tmp
+    tmp = f14 * 2
+    h1_1 = h1_1 + tmp
+    tmp = f15 * 16
+    h1_1 = h1_1 - tmp
+    tmp = f16 * 3
+    h1_1 = h1_1 - tmp
+    tmp = f17 * 14
+    h1_1 = h1_1 - tmp
+    tmp = f18 * 1
+    h1_1 = h1_1 + tmp
+    tmp = f19 * 2
+    h1_1 = h1_1 + tmp
+    tmp = f20 * 4
+    h1_1 = h1_1 - tmp
+    h1_1 = h1_1 / 64
+    if (h1_1 < 0) then
+        h1_1 = 0
+    end if
+    h1_2 = 15
+    tmp = f0 * 1
+    h1_2 = h1_2 + tmp
+    tmp = f1 * 14
+    h1_2 = h1_2 + tmp
+    tmp = f2 * 1
+    h1_2 = h1_2 - tmp
+    tmp = f3 * 3
+    h1_2 = h1_2 + tmp
+    tmp = f4 * 2
+    h1_2 = h1_2 - tmp
+    tmp = f5 * 3
+    h1_2 = h1_2 + tmp
+    tmp = f6 * 11
+    h1_2 = h1_2 + tmp
+    tmp = f7 * 10
+    h1_2 = h1_2 + tmp
+    tmp = f8 * 1
+    h1_2 = h1_2 + tmp
+    tmp = f10 * 2
+    h1_2 = h1_2 + tmp
+    tmp = f11 * 2
+    h1_2 = h1_2 + tmp
+    tmp = f12 * 3
+    h1_2 = h1_2 - tmp
+    tmp = f13 * 11
+    h1_2 = h1_2 - tmp
+    tmp = f14 * 8
+    h1_2 = h1_2 - tmp
+    tmp = f15 * 9
+    h1_2 = h1_2 + tmp
+    tmp = f16 * 1
+    h1_2 = h1_2 - tmp
+    tmp = f17 * 16
+    h1_2 = h1_2 - tmp
+    tmp = f18 * 2
+    h1_2 = h1_2 + tmp
+    tmp = f19 * 13
+    h1_2 = h1_2 + tmp
+    tmp = f20 * 13
+    h1_2 = h1_2 - tmp
+    h1_2 = h1_2 / 64
+    if (h1_2 < 0) then
+        h1_2 = 0
+    end if
+    h1_3 = 8
+    tmp = f0 * 14
+    h1_3 = h1_3 - tmp
+    tmp = f1 * 8
+    h1_3 = h1_3 - tmp
+    tmp = f2 * 1
+    h1_3 = h1_3 - tmp
+    tmp = f3 * 7
+    h1_3 = h1_3 - tmp
+    tmp = f4 * 6
+    h1_3 = h1_3 - tmp
+    tmp = f5 * 14
+    h1_3 = h1_3 - tmp
+    tmp = f6 * 10
+    h1_3 = h1_3 + tmp
+    tmp = f7 * 7
+    h1_3 = h1_3 + tmp
+    tmp = f8 * 4
+    h1_3 = h1_3 + tmp
+    tmp = f9 * 9
+    h1_3 = h1_3 - tmp
+    tmp = f10 * 7
+    h1_3 = h1_3 - tmp
+    tmp = f11 * 1
+    h1_3 = h1_3 + tmp
+    tmp = f12 * 2
+    h1_3 = h1_3 - tmp
+    tmp = f13 * 9
+    h1_3 = h1_3 + tmp
+    tmp = f14 * 11
+    h1_3 = h1_3 - tmp
+    tmp = f15 * 4
+    h1_3 = h1_3 - tmp
+    tmp = f16 * 14
+    h1_3 = h1_3 + tmp
+    tmp = f17 * 7
+    h1_3 = h1_3 + tmp
+    tmp = f18 * 1
+    h1_3 = h1_3 + tmp
+    tmp = f19 * 6
+    h1_3 = h1_3 + tmp
+    tmp = f20 * 2
+    h1_3 = h1_3 - tmp
+    h1_3 = h1_3 / 64
+    if (h1_3 < 0) then
+        h1_3 = 0
+    end if
+    h1_4 = 3
+    tmp = f0 * 13
+    h1_4 = h1_4 - tmp
+    tmp = f1 * 10
+    h1_4 = h1_4 - tmp
+    tmp = f2 * 13
+    h1_4 = h1_4 - tmp
+    tmp = f3 * 7
+    h1_4 = h1_4 + tmp
+    tmp = f4 * 3
+    h1_4 = h1_4 + tmp
+    tmp = f6 * 14
+    h1_4 = h1_4 - tmp
+    tmp = f7 * 6
+    h1_4 = h1_4 + tmp
+    tmp = f8 * 2
+    h1_4 = h1_4 + tmp
+    tmp = f9 * 5
+    h1_4 = h1_4 + tmp
+    tmp = f10 * 3
+    h1_4 = h1_4 - tmp
+    tmp = f11 * 2
+    h1_4 = h1_4 - tmp
+    tmp = f12 * 13
+    h1_4 = h1_4 + tmp
+    tmp = f13 * 14
+    h1_4 = h1_4 + tmp
+    tmp = f14 * 15
+    h1_4 = h1_4 + tmp
+    tmp = f15 * 8
+    h1_4 = h1_4 - tmp
+    tmp = f16 * 15
+    h1_4 = h1_4 + tmp
+    tmp = f17 * 15
+    h1_4 = h1_4 - tmp
+    tmp = f18 * 1
+    h1_4 = h1_4 + tmp
+    tmp = f19 * 3
+    h1_4 = h1_4 - tmp
+    tmp = f20 * 2
+    h1_4 = h1_4 - tmp
+    h1_4 = h1_4 / 64
+    if (h1_4 < 0) then
+        h1_4 = 0
+    end if
+    h1_5 = 9
+    tmp = f0 * 2
+    h1_5 = h1_5 - tmp
+    tmp = f1 * 3
+    h1_5 = h1_5 + tmp
+    tmp = f2 * 14
+    h1_5 = h1_5 + tmp
+    tmp = f3 * 8
+    h1_5 = h1_5 + tmp
+    tmp = f4 * 1
+    h1_5 = h1_5 + tmp
+    tmp = f5 * 13
+    h1_5 = h1_5 + tmp
+    tmp = f6 * 6
+    h1_5 = h1_5 - tmp
+    tmp = f7 * 8
+    h1_5 = h1_5 + tmp
+    tmp = f8 * 1
+    h1_5 = h1_5 - tmp
+    tmp = f9 * 1
+    h1_5 = h1_5 - tmp
+    tmp = f10 * 1
+    h1_5 = h1_5 + tmp
+    tmp = f11 * 10
+    h1_5 = h1_5 - tmp
+    tmp = f12 * 2
+    h1_5 = h1_5 + tmp
+    tmp = f13 * 5
+    h1_5 = h1_5 + tmp
+    tmp = f14 * 12
+    h1_5 = h1_5 + tmp
+    tmp = f15 * 4
+    h1_5 = h1_5 - tmp
+    tmp = f16 * 6
+    h1_5 = h1_5 + tmp
+    tmp = f17 * 12
+    h1_5 = h1_5 + tmp
+    tmp = f18 * 6
+    h1_5 = h1_5 - tmp
+    tmp = f19 * 13
+    h1_5 = h1_5 + tmp
+    tmp = f20 * 7
+    h1_5 = h1_5 - tmp
+    h1_5 = h1_5 / 64
+    if (h1_5 < 0) then
+        h1_5 = 0
+    end if
+    h1_6 = -2
+    tmp = f0 * 3
+    h1_6 = h1_6 + tmp
+    tmp = f1 * 1
+    h1_6 = h1_6 + tmp
+    tmp = f2 * 1
+    h1_6 = h1_6 + tmp
+    tmp = f3 * 9
+    h1_6 = h1_6 + tmp
+    tmp = f4 * 10
+    h1_6 = h1_6 - tmp
+    tmp = f5 * 1
+    h1_6 = h1_6 - tmp
+    tmp = f6 * 5
+    h1_6 = h1_6 - tmp
+    tmp = f7 * 16
+    h1_6 = h1_6 - tmp
+    tmp = f8 * 8
+    h1_6 = h1_6 - tmp
+    tmp = f9 * 12
+    h1_6 = h1_6 - tmp
+    tmp = f10 * 8
+    h1_6 = h1_6 + tmp
+    tmp = f11 * 4
+    h1_6 = h1_6 - tmp
+    tmp = f12 * 2
+    h1_6 = h1_6 - tmp
+    tmp = f14 * 4
+    h1_6 = h1_6 + tmp
+    tmp = f15 * 10
+    h1_6 = h1_6 - tmp
+    tmp = f16 * 5
+    h1_6 = h1_6 + tmp
+    tmp = f17 * 15
+    h1_6 = h1_6 + tmp
+    tmp = f18 * 2
+    h1_6 = h1_6 + tmp
+    tmp = f19 * 1
+    h1_6 = h1_6 - tmp
+    tmp = f20 * 8
+    h1_6 = h1_6 - tmp
+    h1_6 = h1_6 / 64
+    if (h1_6 < 0) then
+        h1_6 = 0
+    end if
+    h1_7 = -16
+    tmp = f0 * 4
+    h1_7 = h1_7 + tmp
+    tmp = f1 * 7
+    h1_7 = h1_7 - tmp
+    tmp = f2 * 9
+    h1_7 = h1_7 - tmp
+    tmp = f3 * 6
+    h1_7 = h1_7 - tmp
+    tmp = f4 * 2
+    h1_7 = h1_7 - tmp
+    tmp = f5 * 4
+    h1_7 = h1_7 + tmp
+    tmp = f6 * 10
+    h1_7 = h1_7 + tmp
+    tmp = f7 * 9
+    h1_7 = h1_7 + tmp
+    tmp = f8 * 13
+    h1_7 = h1_7 + tmp
+    tmp = f9 * 8
+    h1_7 = h1_7 - tmp
+    tmp = f11 * 9
+    h1_7 = h1_7 - tmp
+    tmp = f12 * 11
+    h1_7 = h1_7 + tmp
+    tmp = f14 * 11
+    h1_7 = h1_7 + tmp
+    tmp = f15 * 7
+    h1_7 = h1_7 - tmp
+    tmp = f16 * 9
+    h1_7 = h1_7 + tmp
+    tmp = f17 * 14
+    h1_7 = h1_7 + tmp
+    tmp = f18 * 11
+    h1_7 = h1_7 + tmp
+    tmp = f19 * 1
+    h1_7 = h1_7 - tmp
+    tmp = f20 * 12
+    h1_7 = h1_7 + tmp
+    h1_7 = h1_7 / 64
+    if (h1_7 < 0) then
+        h1_7 = 0
+    end if
+    h1_8 = -17
+    tmp = f0 * 12
+    h1_8 = h1_8 + tmp
+    tmp = f1 * 13
+    h1_8 = h1_8 + tmp
+    tmp = f2 * 1
+    h1_8 = h1_8 + tmp
+    tmp = f3 * 8
+    h1_8 = h1_8 - tmp
+    tmp = f4 * 2
+    h1_8 = h1_8 + tmp
+    tmp = f5 * 6
+    h1_8 = h1_8 + tmp
+    tmp = f6 * 9
+    h1_8 = h1_8 - tmp
+    tmp = f7 * 5
+    h1_8 = h1_8 - tmp
+    tmp = f8 * 10
+    h1_8 = h1_8 - tmp
+    tmp = f9 * 1
+    h1_8 = h1_8 - tmp
+    tmp = f10 * 9
+    h1_8 = h1_8 + tmp
+    tmp = f11 * 5
+    h1_8 = h1_8 + tmp
+    tmp = f12 * 3
+    h1_8 = h1_8 + tmp
+    tmp = f13 * 3
+    h1_8 = h1_8 - tmp
+    tmp = f14 * 5
+    h1_8 = h1_8 + tmp
+    tmp = f15 * 9
+    h1_8 = h1_8 - tmp
+    tmp = f16 * 8
+    h1_8 = h1_8 - tmp
+    tmp = f17 * 1
+    h1_8 = h1_8 - tmp
+    tmp = f18 * 8
+    h1_8 = h1_8 - tmp
+    tmp = f19 * 4
+    h1_8 = h1_8 + tmp
+    tmp = f20 * 6
+    h1_8 = h1_8 + tmp
+    h1_8 = h1_8 / 64
+    if (h1_8 < 0) then
+        h1_8 = 0
+    end if
+    h1_9 = 3
+    tmp = f0 * 11
+    h1_9 = h1_9 - tmp
+    tmp = f1 * 10
+    h1_9 = h1_9 - tmp
+    tmp = f2 * 13
+    h1_9 = h1_9 - tmp
+    tmp = f3 * 7
+    h1_9 = h1_9 + tmp
+    tmp = f4 * 13
+    h1_9 = h1_9 + tmp
+    tmp = f5 * 10
+    h1_9 = h1_9 - tmp
+    tmp = f6 * 9
+    h1_9 = h1_9 - tmp
+    tmp = f7 * 7
+    h1_9 = h1_9 + tmp
+    tmp = f8 * 7
+    h1_9 = h1_9 - tmp
+    tmp = f9 * 9
+    h1_9 = h1_9 + tmp
+    tmp = f11 * 2
+    h1_9 = h1_9 - tmp
+    tmp = f12 * 3
+    h1_9 = h1_9 + tmp
+    tmp = f13 * 2
+    h1_9 = h1_9 + tmp
+    tmp = f14 * 8
+    h1_9 = h1_9 - tmp
+    tmp = f15 * 9
+    h1_9 = h1_9 - tmp
+    tmp = f17 * 1
+    h1_9 = h1_9 + tmp
+    tmp = f19 * 4
+    h1_9 = h1_9 - tmp
+    tmp = f20 * 6
+    h1_9 = h1_9 + tmp
+    h1_9 = h1_9 / 64
+    if (h1_9 < 0) then
+        h1_9 = 0
+    end if
+    h1_10 = -2
+    tmp = f0 * 8
+    h1_10 = h1_10 - tmp
+    tmp = f1 * 5
+    h1_10 = h1_10 - tmp
+    tmp = f2 * 4
+    h1_10 = h1_10 + tmp
+    tmp = f3 * 13
+    h1_10 = h1_10 - tmp
+    tmp = f5 * 6
+    h1_10 = h1_10 - tmp
+    tmp = f6 * 7
+    h1_10 = h1_10 + tmp
+    tmp = f7 * 12
+    h1_10 = h1_10 - tmp
+    tmp = f8 * 3
+    h1_10 = h1_10 - tmp
+    tmp = f9 * 5
+    h1_10 = h1_10 + tmp
+    tmp = f10 * 7
+    h1_10 = h1_10 - tmp
+    tmp = f11 * 14
+    h1_10 = h1_10 - tmp
+    tmp = f12 * 2
+    h1_10 = h1_10 + tmp
+    tmp = f13 * 1
+    h1_10 = h1_10 - tmp
+    tmp = f14 * 11
+    h1_10 = h1_10 + tmp
+    tmp = f15 * 17
+    h1_10 = h1_10 - tmp
+    tmp = f16 * 6
+    h1_10 = h1_10 - tmp
+    tmp = f17 * 12
+    h1_10 = h1_10 - tmp
+    tmp = f18 * 6
+    h1_10 = h1_10 + tmp
+    tmp = f19 * 2
+    h1_10 = h1_10 + tmp
+    h1_10 = h1_10 / 64
+    if (h1_10 < 0) then
+        h1_10 = 0
+    end if
+    h1_11 = 13
+    tmp = f0 * 7
+    h1_11 = h1_11 - tmp
+    tmp = f1 * 15
+    h1_11 = h1_11 - tmp
+    tmp = f3 * 4
+    h1_11 = h1_11 - tmp
+    tmp = f4 * 14
+    h1_11 = h1_11 - tmp
+    tmp = f5 * 1
+    h1_11 = h1_11 + tmp
+    tmp = f6 * 1
+    h1_11 = h1_11 - tmp
+    tmp = f7 * 18
+    h1_11 = h1_11 - tmp
+    tmp = f8 * 3
+    h1_11 = h1_11 + tmp
+    tmp = f9 * 3
+    h1_11 = h1_11 + tmp
+    tmp = f10 * 2
+    h1_11 = h1_11 + tmp
+    tmp = f11 * 14
+    h1_11 = h1_11 - tmp
+    tmp = f12 * 4
+    h1_11 = h1_11 - tmp
+    tmp = f13 * 15
+    h1_11 = h1_11 + tmp
+    tmp = f14 * 17
+    h1_11 = h1_11 + tmp
+    tmp = f15 * 15
+    h1_11 = h1_11 - tmp
+    tmp = f16 * 4
+    h1_11 = h1_11 - tmp
+    tmp = f17 * 6
+    h1_11 = h1_11 + tmp
+    tmp = f18 * 7
+    h1_11 = h1_11 + tmp
+    tmp = f19 * 13
+    h1_11 = h1_11 + tmp
+    tmp = f20 * 4
+    h1_11 = h1_11 - tmp
+    h1_11 = h1_11 / 64
+    if (h1_11 < 0) then
+        h1_11 = 0
+    end if
+    h1_12 = 15
+    tmp = f0 * 14
+    h1_12 = h1_12 + tmp
+    tmp = f1 * 11
+    h1_12 = h1_12 - tmp
+    tmp = f2 * 1
+    h1_12 = h1_12 - tmp
+    tmp = f3 * 2
+    h1_12 = h1_12 + tmp
+    tmp = f4 * 3
+    h1_12 = h1_12 + tmp
+    tmp = f5 * 12
+    h1_12 = h1_12 - tmp
+    tmp = f6 * 10
+    h1_12 = h1_12 + tmp
+    tmp = f7 * 15
+    h1_12 = h1_12 + tmp
+    tmp = f8 * 10
+    h1_12 = h1_12 - tmp
+    tmp = f9 * 3
+    h1_12 = h1_12 - tmp
+    tmp = f10 * 10
+    h1_12 = h1_12 - tmp
+    tmp = f11 * 14
+    h1_12 = h1_12 + tmp
+    tmp = f12 * 7
+    h1_12 = h1_12 + tmp
+    tmp = f13 * 10
+    h1_12 = h1_12 + tmp
+    tmp = f14 * 5
+    h1_12 = h1_12 + tmp
+    tmp = f15 * 1
+    h1_12 = h1_12 - tmp
+    tmp = f16 * 8
+    h1_12 = h1_12 + tmp
+    tmp = f17 * 4
+    h1_12 = h1_12 - tmp
+    tmp = f18 * 5
+    h1_12 = h1_12 - tmp
+    tmp = f19 * 9
+    h1_12 = h1_12 + tmp
+    tmp = f20 * 5
+    h1_12 = h1_12 + tmp
+    h1_12 = h1_12 / 64
+    if (h1_12 < 0) then
+        h1_12 = 0
+    end if
+    h1_13 = 6
+    tmp = f0 * 5
+    h1_13 = h1_13 - tmp
+    tmp = f1 * 4
+    h1_13 = h1_13 - tmp
+    tmp = f2 * 13
+    h1_13 = h1_13 - tmp
+    tmp = f3 * 5
+    h1_13 = h1_13 - tmp
+    tmp = f4 * 7
+    h1_13 = h1_13 - tmp
+    tmp = f5 * 8
+    h1_13 = h1_13 - tmp
+    tmp = f6 * 15
+    h1_13 = h1_13 - tmp
+    tmp = f7 * 10
+    h1_13 = h1_13 + tmp
+    tmp = f8 * 14
+    h1_13 = h1_13 - tmp
+    tmp = f9 * 11
+    h1_13 = h1_13 + tmp
+    tmp = f10 * 9
+    h1_13 = h1_13 - tmp
+    tmp = f11 * 2
+    h1_13 = h1_13 - tmp
+    tmp = f12 * 10
+    h1_13 = h1_13 + tmp
+    tmp = f13 * 5
+    h1_13 = h1_13 + tmp
+    tmp = f14 * 5
+    h1_13 = h1_13 - tmp
+    tmp = f15 * 12
+    h1_13 = h1_13 - tmp
+    tmp = f16 * 7
+    h1_13 = h1_13 - tmp
+    tmp = f17 * 8
+    h1_13 = h1_13 + tmp
+    tmp = f18 * 5
+    h1_13 = h1_13 - tmp
+    tmp = f19 * 12
+    h1_13 = h1_13 + tmp
+    tmp = f20 * 3
+    h1_13 = h1_13 - tmp
+    h1_13 = h1_13 / 64
+    if (h1_13 < 0) then
+        h1_13 = 0
+    end if
+    h1_14 = 11
+    tmp = f0 * 1
+    h1_14 = h1_14 + tmp
+    tmp = f1 * 7
+    h1_14 = h1_14 + tmp
+    tmp = f2 * 1
+    h1_14 = h1_14 - tmp
+    tmp = f3 * 2
+    h1_14 = h1_14 + tmp
+    tmp = f4 * 11
+    h1_14 = h1_14 + tmp
+    tmp = f5 * 6
+    h1_14 = h1_14 + tmp
+    tmp = f6 * 4
+    h1_14 = h1_14 - tmp
+    tmp = f7 * 8
+    h1_14 = h1_14 + tmp
+    tmp = f8 * 8
+    h1_14 = h1_14 + tmp
+    tmp = f9 * 1
+    h1_14 = h1_14 + tmp
+    tmp = f10 * 8
+    h1_14 = h1_14 - tmp
+    tmp = f11 * 4
+    h1_14 = h1_14 + tmp
+    tmp = f12 * 2
+    h1_14 = h1_14 - tmp
+    tmp = f13 * 13
+    h1_14 = h1_14 - tmp
+    tmp = f14 * 8
+    h1_14 = h1_14 - tmp
+    tmp = f15 * 3
+    h1_14 = h1_14 + tmp
+    tmp = f16 * 2
+    h1_14 = h1_14 - tmp
+    tmp = f17 * 1
+    h1_14 = h1_14 + tmp
+    tmp = f18 * 8
+    h1_14 = h1_14 - tmp
+    tmp = f19 * 11
+    h1_14 = h1_14 + tmp
+    tmp = f20 * 6
+    h1_14 = h1_14 - tmp
+    h1_14 = h1_14 / 64
+    if (h1_14 < 0) then
+        h1_14 = 0
+    end if
+    h1_15 = 0
+    tmp = f0 * 1
+    h1_15 = h1_15 - tmp
+    tmp = f1 * 10
+    h1_15 = h1_15 - tmp
+    tmp = f2 * 11
+    h1_15 = h1_15 - tmp
+    tmp = f3 * 4
+    h1_15 = h1_15 + tmp
+    tmp = f4 * 7
+    h1_15 = h1_15 - tmp
+    tmp = f5 * 12
+    h1_15 = h1_15 - tmp
+    tmp = f6 * 10
+    h1_15 = h1_15 - tmp
+    tmp = f7 * 8
+    h1_15 = h1_15 + tmp
+    tmp = f8 * 10
+    h1_15 = h1_15 + tmp
+    tmp = f9 * 4
+    h1_15 = h1_15 + tmp
+    tmp = f10 * 16
+    h1_15 = h1_15 - tmp
+    tmp = f11 * 5
+    h1_15 = h1_15 + tmp
+    tmp = f13 * 11
+    h1_15 = h1_15 - tmp
+    tmp = f14 * 4
+    h1_15 = h1_15 - tmp
+    tmp = f15 * 2
+    h1_15 = h1_15 + tmp
+    tmp = f16 * 8
+    h1_15 = h1_15 - tmp
+    tmp = f17 * 10
+    h1_15 = h1_15 - tmp
+    tmp = f18 * 11
+    h1_15 = h1_15 + tmp
+    tmp = f19 * 2
+    h1_15 = h1_15 + tmp
+    tmp = f20 * 4
+    h1_15 = h1_15 - tmp
+    h1_15 = h1_15 / 64
+    if (h1_15 < 0) then
+        h1_15 = 0
+    end if
+    h2_0 = -4
+    tmp = h1_0 * 12
+    h2_0 = h2_0 + tmp
+    tmp = h1_1 * 8
+    h2_0 = h2_0 - tmp
+    tmp = h1_3 * 10
+    h2_0 = h2_0 + tmp
+    tmp = h1_4 * 8
+    h2_0 = h2_0 - tmp
+    tmp = h1_5 * 11
+    h2_0 = h2_0 + tmp
+    tmp = h1_7 * 2
+    h2_0 = h2_0 - tmp
+    tmp = h1_8 * 12
+    h2_0 = h2_0 + tmp
+    tmp = h1_9 * 11
+    h2_0 = h2_0 + tmp
+    tmp = h1_10 * 9
+    h2_0 = h2_0 - tmp
+    tmp = h1_11 * 1
+    h2_0 = h2_0 - tmp
+    tmp = h1_12 * 3
+    h2_0 = h2_0 + tmp
+    tmp = h1_13 * 12
+    h2_0 = h2_0 + tmp
+    tmp = h1_14 * 10
+    h2_0 = h2_0 + tmp
+    tmp = h1_15 * 18
+    h2_0 = h2_0 + tmp
+    h2_0 = h2_0 / 64
+    if (h2_0 < 0) then
+        h2_0 = 0
+    end if
+    h2_1 = -17
+    tmp = h1_0 * 9
+    h2_1 = h2_1 + tmp
+    tmp = h1_1 * 16
+    h2_1 = h2_1 - tmp
+    tmp = h1_2 * 9
+    h2_1 = h2_1 + tmp
+    tmp = h1_3 * 5
+    h2_1 = h2_1 - tmp
+    tmp = h1_4 * 11
+    h2_1 = h2_1 + tmp
+    tmp = h1_5 * 8
+    h2_1 = h2_1 + tmp
+    tmp = h1_6 * 11
+    h2_1 = h2_1 - tmp
+    tmp = h1_7 * 3
+    h2_1 = h2_1 - tmp
+    tmp = h1_8 * 1
+    h2_1 = h2_1 + tmp
+    tmp = h1_9 * 4
+    h2_1 = h2_1 + tmp
+    tmp = h1_10 * 16
+    h2_1 = h2_1 - tmp
+    tmp = h1_11 * 1
+    h2_1 = h2_1 - tmp
+    tmp = h1_12 * 6
+    h2_1 = h2_1 + tmp
+    tmp = h1_13 * 8
+    h2_1 = h2_1 + tmp
+    tmp = h1_14 * 7
+    h2_1 = h2_1 + tmp
+    tmp = h1_15 * 7
+    h2_1 = h2_1 + tmp
+    h2_1 = h2_1 / 64
+    if (h2_1 < 0) then
+        h2_1 = 0
+    end if
+    h2_2 = -12
+    tmp = h1_0 * 15
+    h2_2 = h2_2 - tmp
+    tmp = h1_1 * 10
+    h2_2 = h2_2 + tmp
+    tmp = h1_2 * 13
+    h2_2 = h2_2 - tmp
+    tmp = h1_3 * 10
+    h2_2 = h2_2 - tmp
+    tmp = h1_5 * 5
+    h2_2 = h2_2 + tmp
+    tmp = h1_6 * 9
+    h2_2 = h2_2 + tmp
+    tmp = h1_7 * 2
+    h2_2 = h2_2 - tmp
+    tmp = h1_8 * 8
+    h2_2 = h2_2 - tmp
+    tmp = h1_9 * 1
+    h2_2 = h2_2 - tmp
+    tmp = h1_10 * 5
+    h2_2 = h2_2 + tmp
+    tmp = h1_11 * 9
+    h2_2 = h2_2 - tmp
+    tmp = h1_12 * 14
+    h2_2 = h2_2 - tmp
+    tmp = h1_13 * 7
+    h2_2 = h2_2 + tmp
+    tmp = h1_14 * 11
+    h2_2 = h2_2 - tmp
+    tmp = h1_15 * 9
+    h2_2 = h2_2 - tmp
+    h2_2 = h2_2 / 64
+    if (h2_2 < 0) then
+        h2_2 = 0
+    end if
+    h2_3 = 13
+    tmp = h1_0 * 15
+    h2_3 = h2_3 + tmp
+    tmp = h1_1 * 11
+    h2_3 = h2_3 - tmp
+    tmp = h1_2 * 17
+    h2_3 = h2_3 - tmp
+    tmp = h1_3 * 11
+    h2_3 = h2_3 + tmp
+    tmp = h1_4 * 10
+    h2_3 = h2_3 - tmp
+    tmp = h1_6 * 21
+    h2_3 = h2_3 + tmp
+    tmp = h1_7 * 4
+    h2_3 = h2_3 - tmp
+    tmp = h1_8 * 17
+    h2_3 = h2_3 + tmp
+    tmp = h1_9 * 14
+    h2_3 = h2_3 + tmp
+    tmp = h1_10 * 17
+    h2_3 = h2_3 + tmp
+    tmp = h1_11 * 8
+    h2_3 = h2_3 + tmp
+    tmp = h1_12 * 12
+    h2_3 = h2_3 - tmp
+    tmp = h1_13 * 12
+    h2_3 = h2_3 + tmp
+    tmp = h1_14 * 15
+    h2_3 = h2_3 - tmp
+    tmp = h1_15 * 14
+    h2_3 = h2_3 - tmp
+    h2_3 = h2_3 / 64
+    if (h2_3 < 0) then
+        h2_3 = 0
+    end if
+    h2_4 = -11
+    tmp = h1_0 * 4
+    h2_4 = h2_4 - tmp
+    tmp = h1_1 * 12
+    h2_4 = h2_4 + tmp
+    tmp = h1_2 * 6
+    h2_4 = h2_4 + tmp
+    tmp = h1_3 * 15
+    h2_4 = h2_4 + tmp
+    tmp = h1_4 * 16
+    h2_4 = h2_4 + tmp
+    tmp = h1_5 * 5
+    h2_4 = h2_4 + tmp
+    tmp = h1_6 * 15
+    h2_4 = h2_4 + tmp
+    tmp = h1_7 * 8
+    h2_4 = h2_4 - tmp
+    tmp = h1_8 * 12
+    h2_4 = h2_4 - tmp
+    tmp = h1_9 * 10
+    h2_4 = h2_4 - tmp
+    tmp = h1_10 * 13
+    h2_4 = h2_4 + tmp
+    tmp = h1_11 * 19
+    h2_4 = h2_4 + tmp
+    tmp = h1_13 * 13
+    h2_4 = h2_4 + tmp
+    tmp = h1_14 * 8
+    h2_4 = h2_4 - tmp
+    tmp = h1_15 * 4
+    h2_4 = h2_4 - tmp
+    h2_4 = h2_4 / 64
+    if (h2_4 < 0) then
+        h2_4 = 0
+    end if
+    h2_5 = -8
+    tmp = h1_1 * 5
+    h2_5 = h2_5 - tmp
+    tmp = h1_2 * 8
+    h2_5 = h2_5 - tmp
+    tmp = h1_3 * 7
+    h2_5 = h2_5 + tmp
+    tmp = h1_4 * 2
+    h2_5 = h2_5 - tmp
+    tmp = h1_5 * 4
+    h2_5 = h2_5 - tmp
+    tmp = h1_6 * 11
+    h2_5 = h2_5 + tmp
+    tmp = h1_7 * 12
+    h2_5 = h2_5 - tmp
+    tmp = h1_8 * 10
+    h2_5 = h2_5 + tmp
+    tmp = h1_9 * 14
+    h2_5 = h2_5 + tmp
+    tmp = h1_10 * 10
+    h2_5 = h2_5 - tmp
+    tmp = h1_11 * 15
+    h2_5 = h2_5 - tmp
+    tmp = h1_12 * 2
+    h2_5 = h2_5 + tmp
+    tmp = h1_13 * 13
+    h2_5 = h2_5 - tmp
+    tmp = h1_14 * 6
+    h2_5 = h2_5 + tmp
+    tmp = h1_15 * 13
+    h2_5 = h2_5 - tmp
+    h2_5 = h2_5 / 64
+    if (h2_5 < 0) then
+        h2_5 = 0
+    end if
+    h2_6 = -10
+    tmp = h1_0 * 9
+    h2_6 = h2_6 - tmp
+    tmp = h1_1 * 10
+    h2_6 = h2_6 + tmp
+    tmp = h1_3 * 9
+    h2_6 = h2_6 - tmp
+    tmp = h1_4 * 11
+    h2_6 = h2_6 + tmp
+    tmp = h1_5 * 10
+    h2_6 = h2_6 + tmp
+    tmp = h1_6 * 7
+    h2_6 = h2_6 + tmp
+    tmp = h1_7 * 14
+    h2_6 = h2_6 + tmp
+    tmp = h1_8 * 3
+    h2_6 = h2_6 - tmp
+    tmp = h1_9 * 18
+    h2_6 = h2_6 + tmp
+    tmp = h1_10 * 7
+    h2_6 = h2_6 - tmp
+    tmp = h1_11 * 19
+    h2_6 = h2_6 + tmp
+    tmp = h1_12 * 16
+    h2_6 = h2_6 + tmp
+    tmp = h1_13 * 10
+    h2_6 = h2_6 - tmp
+    tmp = h1_14 * 3
+    h2_6 = h2_6 + tmp
+    tmp = h1_15 * 5
+    h2_6 = h2_6 - tmp
+    h2_6 = h2_6 / 64
+    if (h2_6 < 0) then
+        h2_6 = 0
+    end if
+    h2_7 = 6
+    tmp = h1_0 * 14
+    h2_7 = h2_7 + tmp
+    tmp = h1_1 * 3
+    h2_7 = h2_7 - tmp
+    tmp = h1_2 * 7
+    h2_7 = h2_7 + tmp
+    tmp = h1_3 * 12
+    h2_7 = h2_7 + tmp
+    tmp = h1_4 * 14
+    h2_7 = h2_7 - tmp
+    tmp = h1_5 * 8
+    h2_7 = h2_7 + tmp
+    tmp = h1_6 * 16
+    h2_7 = h2_7 - tmp
+    tmp = h1_7 * 6
+    h2_7 = h2_7 - tmp
+    tmp = h1_8 * 8
+    h2_7 = h2_7 - tmp
+    tmp = h1_9 * 17
+    h2_7 = h2_7 - tmp
+    tmp = h1_10 * 17
+    h2_7 = h2_7 - tmp
+    tmp = h1_11 * 18
+    h2_7 = h2_7 - tmp
+    tmp = h1_12 * 15
+    h2_7 = h2_7 - tmp
+    tmp = h1_13 * 11
+    h2_7 = h2_7 - tmp
+    tmp = h1_14 * 8
+    h2_7 = h2_7 - tmp
+    tmp = h1_15 * 7
+    h2_7 = h2_7 + tmp
+    h2_7 = h2_7 / 64
+    if (h2_7 < 0) then
+        h2_7 = 0
+    end if
+    log_left = 7
+    tmp = h2_0 * 18
+    log_left = log_left + tmp
+    tmp = h2_1 * 5
+    log_left = log_left + tmp
+    tmp = h2_2 * 11
+    log_left = log_left - tmp
+    tmp = h2_3 * 9
+    log_left = log_left - tmp
+    tmp = h2_4 * 1
+    log_left = log_left - tmp
+    tmp = h2_5 * 10
+    log_left = log_left + tmp
+    tmp = h2_6 * 4
+    log_left = log_left + tmp
+    tmp = h2_7 * 9
+    log_left = log_left - tmp
+    log_left = log_left / 64
+    log_fwd = -26
+    tmp = h2_0 * 2
+    log_fwd = log_fwd - tmp
+    tmp = h2_1 * 2
+    log_fwd = log_fwd - tmp
+    tmp = h2_3 * 6
+    log_fwd = log_fwd + tmp
+    tmp = h2_4 * 14
+    log_fwd = log_fwd - tmp
+    tmp = h2_5 * 1
+    log_fwd = log_fwd + tmp
+    tmp = h2_6 * 5
+    log_fwd = log_fwd - tmp
+    tmp = h2_7 * 8
+    log_fwd = log_fwd + tmp
+    log_fwd = log_fwd / 64
+    log_right = 6
+    tmp = h2_0 * 12
+    log_right = log_right - tmp
+    tmp = h2_1 * 16
+    log_right = log_right - tmp
+    tmp = h2_2 * 18
+    log_right = log_right - tmp
+    tmp = h2_3 * 13
+    log_right = log_right + tmp
+    tmp = h2_4 * 23
+    log_right = log_right + tmp
+    tmp = h2_5 * 22
+    log_right = log_right + tmp
+    tmp = h2_6 * 12
+    log_right = log_right + tmp
+    tmp = h2_7 * 6
+    log_right = log_right - tmp
+    log_right = log_right / 64
+    score_left = log_left
+    score_fwd = log_fwd
+    score_right = log_right
+    action = 0
+    best_score = log_fwd
+    if (log_left > best_score) then
+        action = -1
+        best_score = log_left
+    end if
+    if (log_right > best_score) then
+        action = 1
+        best_score = log_right
+    end if
+    safe_left = 0
+    safe_fwd = 0
+    safe_right = 0
+    eL, emL, pL, gL = getTileRel(-1, 0)
+    if (eL == 1) then
+        if (emL == 1) then
+            safe_left = 1
+        else if (gL == 1) then
+            safe_left = 1
+        end if
+    end if
+    eF, emF, pF, gF = getTileRel(0, -1)
+    if (eF == 1) then
+        if (emF == 1) then
+            safe_fwd = 1
+        else if (gF == 1) then
+            safe_fwd = 1
+        end if
+    end if
+    eR, emR, pR, gR = getTileRel(1, -1)
+    if (eR == 1) then
+        if (emR == 1) then
+            safe_right = 1
+        else if (gR == 1) then
+            safe_right = 1
+        end if
+    end if
+    chosen_safe = 0
+    if (action == -1) then
+        if (safe_left == 1) then
+            chosen_safe = 1
+        end if
+    else if (action == 0) then
+        if (safe_fwd == 1) then
+            chosen_safe = 1
+        end if
+    else if (action == 1) then
+        if (safe_right == 1) then
+            chosen_safe = 1
+        end if
+    end if
+    if (chosen_safe == 0) then
+        best_action = action
+        best_score = -999999
+        if (safe_fwd == 1) then
+            best_action = 0
+            best_score = score_fwd
+        end if
+        if (safe_left == 1) then
+            if (score_left > best_score) then
+                best_action = -1
+                best_score = score_left
+            end if
+        end if
+        if (safe_right == 1) then
+            if (score_right > best_score) then
+                best_action = 1
+                best_score = score_right
+            end if
+        end if
+        if (best_score > -999999) then
+            action = best_action
+        end if
+    end if
+    return action
+end function
+
+function main() do
+    while (1 == 1) do
+        action = infer_action()
+        turn(action)
+        mem_prev_action = action
+        wait_for_next_move()
+    end while
+end function
+
+main()

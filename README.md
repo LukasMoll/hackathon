@@ -345,6 +345,55 @@ Notes:
 - Generated Tronkscript includes a safety fallback that overrides immediate wall/body collisions using the tree votes.
 - If benchmark runtime is too high with large trees/ensembles, reduce `--benchmark-matches` first.
 
+### Compile To Tronkscript (Compact NN Surrogate)
+
+To distill the teacher policy into a compact neural network that is explicitly
+constrained for Tronkscript conversion, run:
+
+```bash
+python3 train_nn_surrogate.py \
+  --policy training_outputs/final_policy.pt \
+  --output-dir nn_surrogate_outputs \
+  --samples 120000 \
+  --collect-max-steps 160 \
+  --feature-radius 2 \
+  --candidate-arches 16x8,24x12,32x16,40x20 \
+  --distill-kl-coef 0.5 \
+  --distill-temperature 2.0 \
+  --dagger-iters 2 \
+  --dagger-samples 30000 \
+  --dagger-teacher-mix 0.15 \
+  --dagger-use-safety-fallback \
+  --ppo-finetune-updates 12 \
+  --ppo-rollout-episodes 24 \
+  --tick-budget 5000 \
+  --parity-samples 1200 \
+  --benchmark-matches 120 \
+  --benchmark-max-steps 160 \
+  --engine c \
+  --require-c-core
+```
+
+This workflow:
+
+- collects teacher-labeled data from `final_policy.pt`
+- searches compact architectures that fit a Tronkscript tick budget
+- supports soft-logit distillation (KL) in addition to hard action labels
+- supports DAgger rounds on student-induced states
+- supports short rank-aware PPO fine-tuning on the selected compact student
+- quantizes the selected NN to fixed-point integers
+- compiles NN inference to Tronkscript
+- validates Python-quantized vs Tronkscript parity
+- benchmarks 50/50 versus the teacher model
+
+Generated artifacts:
+
+- `nn_surrogate_outputs/nn_student_float.pt`
+- `nn_surrogate_outputs/nn_student_quantized.json`
+- `nn_surrogate_outputs/nn_policy_lib.tronkscript`
+- `nn_surrogate_outputs/nn_policy_bot.tronkscript`
+- `nn_surrogate_outputs/nn_surrogate_report.json`
+
 ### Plot survival progress
 
 To visualize how average survival changes across training updates:
