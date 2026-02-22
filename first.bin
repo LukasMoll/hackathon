@@ -1,0 +1,695 @@
+-- Tronk competitive bot: survival-first with adaptive gem pursuit and collision prediction.
+
+BOARD_RADIUS = 5
+MOVE_INTERVAL = 10000
+DECISION_WINDOW = 9500
+GROWTH_COOLDOWN_STEPS = 3
+
+POST_GEM_COOLDOWN = 0
+LAST_LENGTH = -1
+LAST_MOVE_NUMBER = -1
+
+function update_growth_state(current_length, move_number) do
+    if (move_number != LAST_MOVE_NUMBER) then
+        if (LAST_LENGTH >= 0) then
+            if (current_length > LAST_LENGTH) then
+                POST_GEM_COOLDOWN = GROWTH_COOLDOWN_STEPS
+            else
+                if (POST_GEM_COOLDOWN > 0) then
+                    POST_GEM_COOLDOWN = POST_GEM_COOLDOWN - 1
+                end if
+            end if
+        else
+            POST_GEM_COOLDOWN = 0
+        end if
+
+        LAST_LENGTH = current_length
+        LAST_MOVE_NUMBER = move_number
+    end if
+
+    return POST_GEM_COOLDOWN
+end function
+
+function wrap_facing(face) do
+    wrapped = face
+    if (wrapped < 0) then
+        wrapped = wrapped + 6
+    end if
+    if (wrapped > 5) then
+        wrapped = wrapped - 6
+    end if
+    return wrapped
+end function
+
+function facing_to_delta(face) do
+    if (face == 0) then
+        return 0, -1
+    end if
+    if (face == 1) then
+        return 1, -1
+    end if
+    if (face == 2) then
+        return 1, 0
+    end if
+    if (face == 3) then
+        return 0, 1
+    end if
+    if (face == 4) then
+        return -1, 1
+    end if
+    return -1, 0
+end function
+
+function turned_facing(base_facing, turn_dir) do
+    next_face = base_facing + turn_dir
+    next_face = wrap_facing(next_face)
+    return next_face
+end function
+
+function step_from(head_q, head_r, facing) do
+    step_q, step_r = facing_to_delta(facing)
+    next_q = head_q + step_q
+    next_r = head_r + step_r
+    return next_q, next_r
+end function
+
+function hex_distance(q1, r1, q2, r2) do
+    dq = q1 - q2
+    dr = r1 - r2
+    ds = 0 - dq
+    ds = ds - dr
+    adq = abs(dq)
+    adr = abs(dr)
+    ads = abs(ds)
+    m = max(adq, adr)
+    d = max(m, ads)
+    return d
+end function
+
+function edge_distance(q, r) do
+    s = 0 - q
+    s = s - r
+    aq = abs(q)
+    ar = abs(r)
+    as = abs(s)
+    m = max(aq, ar)
+    max_abs = max(m, as)
+    edge = BOARD_RADIUS - max_abs
+    return edge
+end function
+
+function wait_until_decision_window() do
+    now_tick = getTick()
+    tick_in_cycle = now_tick % MOVE_INTERVAL
+    ticks_left = MOVE_INTERVAL - tick_in_cycle
+    if (ticks_left > DECISION_WINDOW) then
+        idle_ticks = ticks_left - DECISION_WINDOW
+        wait(idle_ticks)
+    end if
+end function
+
+function wait_for_next_move() do
+    now_tick = getTick()
+    tick_in_cycle = now_tick % MOVE_INTERVAL
+    ticks_left = MOVE_INTERVAL - tick_in_cycle
+    if (ticks_left > 0) then
+        wait(ticks_left)
+    end if
+end function
+
+function is_walkable(exists_flag, player_id) do
+    if (exists_flag == 0) then
+        return 0
+    end if
+    if (player_id == -1) then
+        return 1
+    end if
+    return 0
+end function
+
+function count_open_next_options(head_q, head_r, facing) do
+    open_count = 0
+
+    face_l = turned_facing(facing, -1)
+    q_l, r_l = step_from(head_q, head_r, face_l)
+    exists_l, _, player_l, _ = getTileAbs(q_l, r_l)
+    walkable_l = is_walkable(exists_l, player_l)
+    if (walkable_l == 1) then
+            open_count = open_count + 1
+    end if
+
+    face_f = turned_facing(facing, 0)
+    q_f, r_f = step_from(head_q, head_r, face_f)
+    exists_f, _, player_f, _ = getTileAbs(q_f, r_f)
+    walkable_f = is_walkable(exists_f, player_f)
+    if (walkable_f == 1) then
+            open_count = open_count + 1
+    end if
+
+    face_r = turned_facing(facing, 1)
+    q_r, r_r = step_from(head_q, head_r, face_r)
+    exists_r, _, player_r, _ = getTileAbs(q_r, r_r)
+    walkable_r = is_walkable(exists_r, player_r)
+    if (walkable_r == 1) then
+            open_count = open_count + 1
+    end if
+
+    return open_count
+end function
+
+function count_free_tiles_near(center_q, center_r, radius) do
+    total_free = 0
+    q_start = center_q - radius
+    q_end = center_q + radius
+
+    for (scan_q = q_start to q_end) do
+        r_start = center_r - radius
+        r_end = center_r + radius
+
+        for (scan_r = r_start to r_end) do
+            dist = hex_distance(center_q, center_r, scan_q, scan_r)
+            if (dist <= radius) then
+                exists, _, player_id, _ = getTileAbs(scan_q, scan_r)
+                walkable = is_walkable(exists, player_id)
+                if (walkable == 1) then
+                        total_free = total_free + 1
+                end if
+            end if
+        end for
+    end for
+
+    return total_free
+end function
+
+function nearest_enemy_distance_to_tile(tile_q, tile_r, my_id) do
+    best_dist = 99
+
+    for (pid = 0 to 5) do
+        if (pid != my_id) then
+            alive, head_q, head_r, _, _ = getPlayerInfo(pid)
+            if (alive == 1) then
+                d = hex_distance(head_q, head_r, tile_q, tile_r)
+                if (d < best_dist) then
+                    best_dist = d
+                end if
+            end if
+        end if
+    end for
+
+    return best_dist
+end function
+
+function tile_collision_pressure(target_q, target_r, my_id) do
+    pressure = 0
+    challengers = 0
+    forced_collision = 0
+    nearest_enemy = 99
+    direct_duel = 0
+
+    for (pid = 0 to 5) do
+        if (pid != my_id) then
+            alive, head_q, head_r, head_facing, _ = getPlayerInfo(pid)
+            if (alive == 1) then
+                enemy_dist = hex_distance(head_q, head_r, target_q, target_r)
+                if (enemy_dist < nearest_enemy) then
+                    nearest_enemy = enemy_dist
+                end if
+
+                legal_count = 0
+                can_hit = 0
+
+                ef_l = turned_facing(head_facing, -1)
+                eq_l, er_l = step_from(head_q, head_r, ef_l)
+                ex_l, _, player_l, _ = getTileAbs(eq_l, er_l)
+                walk_l = is_walkable(ex_l, player_l)
+                if (walk_l == 1) then
+                    legal_count = legal_count + 1
+                    if (eq_l == target_q) then
+                        if (er_l == target_r) then
+                            can_hit = 1
+                        end if
+                    end if
+                end if
+
+                ef_f = turned_facing(head_facing, 0)
+                eq_f, er_f = step_from(head_q, head_r, ef_f)
+                ex_f, _, player_f, _ = getTileAbs(eq_f, er_f)
+                walk_f = is_walkable(ex_f, player_f)
+                if (walk_f == 1) then
+                    legal_count = legal_count + 1
+                    if (eq_f == target_q) then
+                        if (er_f == target_r) then
+                            can_hit = 1
+                        end if
+                    end if
+                end if
+
+                ef_r = turned_facing(head_facing, 1)
+                eq_r, er_r = step_from(head_q, head_r, ef_r)
+                ex_r, _, player_r, _ = getTileAbs(eq_r, er_r)
+                walk_r = is_walkable(ex_r, player_r)
+                if (walk_r == 1) then
+                    legal_count = legal_count + 1
+                    if (eq_r == target_q) then
+                        if (er_r == target_r) then
+                            can_hit = 1
+                        end if
+                    end if
+                end if
+
+                if (can_hit == 1) then
+                    challengers = challengers + 1
+
+                    if (enemy_dist == 2) then
+                        pressure = pressure + 2600
+
+                        if (eq_f == target_q) then
+                            if (er_f == target_r) then
+                                pressure = pressure + 2200
+                                direct_duel = direct_duel + 1
+                            end if
+                        end if
+                    end if
+
+                    if (legal_count <= 1) then
+                        pressure = pressure + 3600
+                        forced_collision = 1
+                    end if
+                    if (legal_count == 2) then
+                        pressure = pressure + 2400
+                    end if
+                    if (legal_count >= 3) then
+                        pressure = pressure + 1700
+                    end if
+                end if
+            end if
+        end if
+    end for
+
+    return pressure, challengers, forced_collision, nearest_enemy, direct_duel
+end function
+
+function count_gems_ahead(head_q, head_r, facing) do
+    gems = 0
+
+    fwd_face = turned_facing(facing, 0)
+    fwd_q, fwd_r = step_from(head_q, head_r, fwd_face)
+    ex_f, _, _, gem_f = getTileAbs(fwd_q, fwd_r)
+    if (ex_f == 1) then
+        if (gem_f == 1) then
+            gems = gems + 1
+        end if
+    end if
+
+    left_face = turned_facing(facing, -1)
+    left_q, left_r = step_from(head_q, head_r, left_face)
+    ex_l, _, _, gem_l = getTileAbs(left_q, left_r)
+    if (ex_l == 1) then
+        if (gem_l == 1) then
+            gems = gems + 1
+        end if
+    end if
+
+    right_face = turned_facing(facing, 1)
+    right_q, right_r = step_from(head_q, head_r, right_face)
+    ex_r, _, _, gem_r = getTileAbs(right_q, right_r)
+    if (ex_r == 1) then
+        if (gem_r == 1) then
+            gems = gems + 1
+        end if
+    end if
+
+    return gems
+end function
+
+function find_nearest_gem(from_q, from_r) do
+    found = 0
+    best_q = 0
+    best_r = 0
+    best_dist = 999
+    best_edge = -1
+
+    for (scan_q = -5 to 5) do
+        r_min_a = -5
+        r_min_b = 0 - scan_q
+        r_min_b = r_min_b - 5
+        r_min = max(r_min_a, r_min_b)
+
+        r_max_a = 5
+        r_max_b = 0 - scan_q
+        r_max_b = r_max_b + 5
+        r_max = min(r_max_a, r_max_b)
+
+        for (scan_r = r_min to r_max) do
+            _, _, _, has_gem = getTileAbs(scan_q, scan_r)
+            if (has_gem == 1) then
+                gem_dist = hex_distance(from_q, from_r, scan_q, scan_r)
+                gem_edge = edge_distance(scan_q, scan_r)
+
+                if (found == 0) then
+                    found = 1
+                    best_q = scan_q
+                    best_r = scan_r
+                    best_dist = gem_dist
+                    best_edge = gem_edge
+                else
+                    if (gem_dist < best_dist) then
+                        best_q = scan_q
+                        best_r = scan_r
+                        best_dist = gem_dist
+                        best_edge = gem_edge
+                    else
+                        if (gem_dist == best_dist) then
+                            if (gem_edge > best_edge) then
+                                best_q = scan_q
+                                best_r = scan_r
+                                best_dist = gem_dist
+                                best_edge = gem_edge
+                            end if
+                        end if
+                    end if
+                end if
+            end if
+        end for
+    end for
+
+    return found, best_q, best_r, best_dist
+end function
+
+function evaluate_move(turn_dir, my_id, my_q, my_r, my_facing, alive_count, move_number, post_gem_cooldown, target_found, target_q, target_r) do
+    new_facing = turned_facing(my_facing, turn_dir)
+    next_q, next_r = step_from(my_q, my_r, new_facing)
+    exists, _, player_next, has_gem = getTileAbs(next_q, next_r)
+
+    if (exists == 0) then
+        return -200000
+    end if
+
+    if (player_next != -1) then
+        return -180000
+    end if
+
+    score = 0
+    center_dist_now = hex_distance(my_q, my_r, 0, 0)
+    center_dist_next = hex_distance(next_q, next_r, 0, 0)
+
+    if (turn_dir == 0) then
+        score = score + 1
+    end if
+
+    edge = edge_distance(next_q, next_r)
+    if (edge == 0) then
+        score = score - 850
+    end if
+    if (edge == 1) then
+        score = score + 120
+    end if
+    if (edge == 2) then
+        score = score + 160
+    end if
+    if (edge == 3) then
+        score = score + 90
+    end if
+    if (edge == 4) then
+        score = score - 60
+    end if
+    if (edge >= 5) then
+        score = score - 260
+    end if
+
+    open_next = count_open_next_options(next_q, next_r, new_facing)
+    open_bonus = open_next * 220
+    score = score + open_bonus
+
+    if (open_next == 0) then
+        score = score - 5000
+    end if
+    if (open_next == 1) then
+        score = score - 900
+    end if
+
+    local_space = count_free_tiles_near(next_q, next_r, 2)
+    local_bonus = local_space * 32
+    score = score + local_bonus
+
+    pressure, challengers, forced, nearest_enemy, direct_duel = tile_collision_pressure(next_q, next_r, my_id)
+    score = score - pressure
+
+    if (challengers >= 2) then
+        score = score - 5200
+    end if
+    if (challengers == 1) then
+        if (alive_count >= 4) then
+            score = score - 1900
+        end if
+    end if
+
+    if (forced == 1) then
+        score = score - 4200
+    end if
+
+    if (direct_duel >= 1) then
+        score = score - 9500
+        if (turn_dir == 0) then
+            score = score - 1400
+        end if
+    end if
+
+    if (nearest_enemy <= 1) then
+        score = score - 900
+    end if
+    if (nearest_enemy == 2) then
+        score = score - 200
+    end if
+    if (nearest_enemy >= 4) then
+        if (alive_count >= 4) then
+            score = score + 220
+        end if
+    end if
+
+    if (post_gem_cooldown > 0) then
+        if (challengers >= 1) then
+            score = score - 3600
+        end if
+        if (nearest_enemy <= 2) then
+            score = score - 1100
+        end if
+        if (center_dist_next < center_dist_now) then
+            score = score - 280
+        end if
+    end if
+
+    if (alive_count >= 5) then
+        if (move_number <= 10) then
+            if (center_dist_next < center_dist_now) then
+                score = score - 340
+            end if
+            if (center_dist_next <= 2) then
+                score = score - 1300
+            end if
+        end if
+    end if
+
+    near_gems = count_gems_ahead(next_q, next_r, new_facing)
+    if (near_gems >= 1) then
+        near_bonus = near_gems * 220
+        if (pressure < 2000) then
+            near_bonus = near_bonus + 250
+        end if
+        score = score + near_bonus
+    end if
+
+    if (has_gem == 1) then
+        gem_bonus = 1300
+        if (challengers == 0) then
+            gem_bonus = gem_bonus + 900
+        end if
+        if (challengers >= 1) then
+            gem_bonus = gem_bonus - 800
+        end if
+
+        if (alive_count >= 5) then
+            if (move_number <= 8) then
+                gem_bonus = gem_bonus - 800
+            end if
+        end if
+        if (alive_count == 3) then
+            gem_bonus = gem_bonus + 300
+        end if
+        if (alive_count <= 2) then
+            gem_bonus = gem_bonus - 300
+        end if
+
+        if (post_gem_cooldown > 0) then
+            if (challengers == 0) then
+                gem_bonus = gem_bonus + 350
+            else
+                gem_bonus = gem_bonus - 2200
+            end if
+        end if
+
+        score = score + gem_bonus
+    end if
+
+    if (target_found == 1) then
+        gem_dist = hex_distance(next_q, next_r, target_q, target_r)
+        gem_weight = 22
+
+        if (alive_count >= 5) then
+            gem_weight = 12
+            if (move_number <= 8) then
+                gem_weight = 4
+            end if
+        end if
+        if (alive_count == 4) then
+            gem_weight = 18
+        end if
+        if (alive_count <= 2) then
+            gem_weight = 15
+        end if
+
+        gem_penalty = gem_dist * gem_weight
+        score = score - gem_penalty
+    end if
+
+    if (alive_count <= 2) then
+        endgame_space_bonus = local_space * 18
+        score = score + endgame_space_bonus
+        endgame_open_bonus = open_next * 90
+        score = score + endgame_open_bonus
+    end if
+
+    if (alive_count >= 4) then
+        if (move_number <= 16) then
+            if (challengers == 0) then
+                score = score + 180
+            end if
+        end if
+    end if
+
+    return score
+end function
+
+function choose_turn() do
+    my_id = getPlayerId()
+    current_tick = getTick()
+    move_number = current_tick / MOVE_INTERVAL
+    my_q = 0
+    my_r = 0
+    my_facing = 0
+    my_length = 1
+    alive_count = 0
+
+    for (pid = 0 to 5) do
+        alive, head_q, head_r, head_facing, body_len = getPlayerInfo(pid)
+        if (alive == 1) then
+            alive_count = alive_count + 1
+        end if
+        if (pid == my_id) then
+            my_q = head_q
+            my_r = head_r
+            my_facing = head_facing
+            my_length = body_len
+        end if
+    end for
+
+    post_gem_cooldown = update_growth_state(my_length, move_number)
+
+    target_found = 0
+    target_q = 0
+    target_r = 0
+    should_scan_gem = 0
+
+    if (alive_count >= 3) then
+        should_scan_gem = 1
+    end if
+
+    if (alive_count >= 5) then
+        if (move_number <= 4) then
+            should_scan_gem = 0
+        end if
+    end if
+
+    if (post_gem_cooldown > 0) then
+        if (alive_count >= 3) then
+            should_scan_gem = 0
+        end if
+    end if
+
+    if (should_scan_gem == 1) then
+        target_found, target_q, target_r, _ = find_nearest_gem(my_q, my_r)
+    end if
+
+    if (target_found == 1) then
+        if (alive_count >= 4) then
+            my_target_dist = hex_distance(my_q, my_r, target_q, target_r)
+            enemy_target_dist = nearest_enemy_distance_to_tile(target_q, target_r, my_id)
+            if (enemy_target_dist < my_target_dist) then
+                target_found = 0
+                target_q = 0
+                target_r = 0
+            end if
+        end if
+    end if
+
+    score_forward = evaluate_move(0, my_id, my_q, my_r, my_facing, alive_count, move_number, post_gem_cooldown, target_found, target_q, target_r)
+    score_left = evaluate_move(-1, my_id, my_q, my_r, my_facing, alive_count, move_number, post_gem_cooldown, target_found, target_q, target_r)
+    score_right = evaluate_move(1, my_id, my_q, my_r, my_facing, alive_count, move_number, post_gem_cooldown, target_found, target_q, target_r)
+
+    best_turn = 0
+    best_score = score_forward
+
+    if (score_left > best_score) then
+        best_score = score_left
+        best_turn = -1
+    end if
+
+    if (score_right > best_score) then
+        best_score = score_right
+        best_turn = 1
+    end if
+
+    if (move_number <= 1) then
+        preferred_turn = -1
+        parity = my_id % 2
+        if (parity == 1) then
+            preferred_turn = 1
+        end if
+
+        if (preferred_turn == -1) then
+            if (score_left > -170000) then
+                best_turn = -1
+                best_score = score_left
+            else
+                if (score_right > -170000) then
+                    best_turn = 1
+                    best_score = score_right
+                end if
+            end if
+        end if
+
+        if (preferred_turn == 1) then
+            if (score_right > -170000) then
+                best_turn = 1
+                best_score = score_right
+            else
+                if (score_left > -170000) then
+                    best_turn = -1
+                    best_score = score_left
+                end if
+            end if
+        end if
+    end if
+
+    turn(best_turn)
+end function
+
+function main() do
+    while (1 == 1) do
+        wait_until_decision_window()
+        choose_turn()
+        wait_for_next_move()
+    end while
+end function
+
+main()

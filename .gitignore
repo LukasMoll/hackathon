@@ -1,0 +1,55 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python cache / tooling
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Build artifacts
+build/
+dist/
+*.o
+*.obj
+*.a
+
+# C core compiled outputs
+c_core/libtronk_core.dylib
+c_core/libtronk_core.so
+c_core/tronk_core.dll
+c_core/*.o
+
+# Generated ML/training outputs
+ml_runs/
+training_outputs*/
+tree_surrogate_main*/
+tree_surrogate_outputs/
+_rollout_ipc/

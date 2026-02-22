@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tronk ML Interface</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <style>
+      .ml-shell {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 12px;
+        padding: 12px;
+      }
+
+      .ml-controls,
+      .ml-view {
+        border: 1px solid #242a35;
+        border-radius: 10px;
+        background: #0e1116;
+        padding: 12px;
+      }
+
+      .ml-controls h2,
+      .ml-view h2 {
+        margin-top: 0;
+      }
+
+      .control-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .control-row label {
+        font-size: 12px;
+        color: #94a3b8;
+      }
+
+      .action-table {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        margin: 10px 0;
+      }
+
+      .action-table select {
+        width: 100%;
+        background: #0a0d12;
+        border: 1px solid #313a4d;
+        color: #e5e7eb;
+        padding: 6px;
+        border-radius: 6px;
+        font-family: inherit;
+      }
+
+      #ml-canvas {
+        width: 100%;
+        border: 1px solid #242a35;
+        border-radius: 8px;
+        background: #020304;
+      }
+
+      .playback {
+        margin-top: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .mono {
+        font-family: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+      }
+
+      #ml-log {
+        min-height: 140px;
+        border: 1px solid #242a35;
+        border-radius: 8px;
+        background: #080c13;
+        padding: 8px;
+        overflow: auto;
+        white-space: pre-wrap;
+      }
+
+      @media (max-width: 1200px) {
+        .ml-shell {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ml-shell">
+      <section class="ml-controls">
+        <h2>ML Simulator</h2>
+        <div class="control-row">
+          <label>
+            Seed
+            <input id="seed" type="number" value="1" />
+          </label>
+          <label>
+            Max Steps
+            <input id="max-steps" type="number" value="300" min="1" max="10000" />
+          </label>
+          <button id="new-session">New Session</button>
+        </div>
+
+        <div class="control-row mono" id="session-info">No active session</div>
+
+        <div class="action-table" id="actions"></div>
+
+        <div class="control-row">
+          <button id="step-once">Step</button>
+          <button id="step-random">Random Step</button>
+          <button id="auto-play">Auto</button>
+        </div>
+
+        <h3>Save / Load</h3>
+        <div class="control-row">
+          <input id="save-name" type="text" placeholder="run name" />
+          <button id="save-run">Save</button>
+        </div>
+        <div class="control-row">
+          <select id="saved-list"></select>
+          <button id="refresh-saved">Refresh</button>
+          <button id="load-saved">Load</button>
+        </div>
+
+        <h3>Function Query</h3>
+        <div class="control-row">
+          <label>
+            Player
+            <input id="query-player" type="number" min="0" max="5" value="0" />
+          </label>
+          <input id="query-fn" type="text" value="getTileRel" />
+          <input id="query-args" type="text" value="0,-1" />
+          <button id="query-btn">Call</button>
+        </div>
+        <div id="query-out" class="mono"></div>
+      </section>
+
+      <section class="ml-view">
+        <h2>Replay</h2>
+        <canvas id="ml-canvas" width="980" height="760"></canvas>
+        <div class="playback">
+          <button id="play">Play</button>
+          <input id="frame" type="range" min="0" max="0" value="0" />
+          <span id="frame-label" class="mono">Frame 0 / 0</span>
+        </div>
+        <div id="status" class="mono">No data</div>
+        <h3>Events</h3>
+        <div id="ml-log" class="mono">No events</div>
+      </section>
+    </div>
+
+    <script src="/static/ml.js"></script>
+  </body>
+</html>
